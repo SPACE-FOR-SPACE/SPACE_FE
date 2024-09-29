@@ -3,31 +3,57 @@ import arrow from "../assets/etc/arrow.svg"
 import back from "../assets/etc/Back.svg"
 import { PlanetObj } from "./Object";
 import { useNavigate } from "react-router-dom";
+import Simulator from "./Simulator";
+import Ballon from "./Ballon";
+import { useState, useRef, useEffect } from "react";
 
 export default function Chat({Obj, size, left, bottom}) {
     const navigate = useNavigate();
     const imageSrc = PlanetObj[0][Obj];
+    const [input, setInput] = useState(""); 
+    const [Text, SetText] = useState([]);
+    const chatingRef = useRef(null);
+    const inputRef = useRef(null);
+
+    const TextInput = () => {
+        if (input.trim()) {
+            SetText([...Text, input]);
+            setInput("");
+            inputRef.current.focus();
+        }
+    };
+
+    const InputEnter = (e) => {
+        if (e.key === "Enter") {
+            TextInput();
+        }
+    };
+
+    useEffect(() => {
+        if (chatingRef.current) {
+            chatingRef.current.scrollTop = chatingRef.current.scrollHeight; // 강제적으로 스크롤을 맨 아래로
+        }
+    }, [Text]);
+
     return (
         <Container>
             <Back onClick={() => navigate(`/`)}>
                 <BackArrow src={back} />
                 <BackText>뒤로가기</BackText>
             </Back>
-            <Simul />
-
+            <Simulator />
             <ChatBg>
-                <Chating>
-                    {[...Array(12)].map((_, index) => (
-                        <ChatBox key={index} />
+                <Chating ref={chatingRef}>
+                    {Text.map((item, index) => (
+                        <Ballon key={index} Text={item}/>
                     ))}
                 </Chating>
                 {
                     imageSrc && <ObjImg src={imageSrc} size={size} left={left} bottom={bottom}/>
                 }
-                
                 <InputBox>
-                    <Input />
-                    <InputBtn>
+                    <Input ref={inputRef} value={input} onChange={(e) => setInput(e.target.value)} onKeyDown={InputEnter}/>
+                    <InputBtn onClick={() => TextInput()}>
                         <Arrow src={arrow} alt="send" />
                     </InputBtn>
                 </InputBox>
@@ -42,11 +68,6 @@ const Container = styled.div `
     align-items: center;
     text-align: center;
     height: 100vh;
-`
-
-const Simul = styled.div `
-    width:100%;
-    height:100%;
 `
 
 const ChatBg = styled.div `
@@ -92,16 +113,6 @@ const Chating = styled.div `
         background-clip: padding-box;
         border: 0.5vh solid transparent;
     }
-`
-
-const ChatBox = styled.div `
-    border: 1px solid black;
-    display: flex;
-    width: 100vh;
-    height: auto;
-    min-height: 100px;
-    padding: 50px;
-    /* background-color: white; */
 `
 
 const ObjImg = styled.img `
@@ -151,7 +162,7 @@ const InputBtn = styled.button `
     border: none;
     border-radius: 100%;
     background-color: #FFD979;
-    top: 10%;
+    top: 8%;
     right: 1%;
     transition: background-color 0.2s;
     cursor: pointer;
@@ -184,13 +195,13 @@ const Back = styled.div `
 
 const BackArrow = styled.img `
     position: absolute;
-    top: -0.5vh;
+    top: -1vh;
     left: 2vh;
     width: 3vh;
 `
 const BackText = styled.span `
     position: absolute;
-    top: -1vh;
+    top: -1.5vh;
     left: 4vh;
     width: 15vh;
 `

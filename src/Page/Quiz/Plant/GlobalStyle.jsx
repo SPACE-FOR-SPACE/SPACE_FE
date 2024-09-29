@@ -1,5 +1,5 @@
 import { createGlobalStyle } from "styled-components";
-import Sea from "../../../assets/Background/plant.svg";
+import Bg from "../../../assets/Background/plant.svg";
 
 const GlobalStyles = createGlobalStyle`
     body {
@@ -7,7 +7,7 @@ const GlobalStyles = createGlobalStyle`
         height: 100vh; 
         margin: 0;
         color: ${({ theme }) => theme.textColor};
-        background-image: url(${Sea});
+        background-image: url(${Bg});
         background-repeat: no-repeat;
         background-size: cover;
         background-position: center;

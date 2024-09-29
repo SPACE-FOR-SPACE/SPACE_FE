@@ -1,5 +1,5 @@
 import { createGlobalStyle } from "styled-components";
-import Volcano from "../../../assets/Background/Volcano.svg";
+import Bg from "../../../assets/Background/Volcano.svg";
 
 const GlobalStyles = createGlobalStyle`
     body {
@@ -7,7 +7,7 @@ const GlobalStyles = createGlobalStyle`
         height: 100vh; 
         margin: 0;
         color: ${({ theme }) => theme.textColor};
-        background-image: url(${Volcano});
+        background-image: url(${Bg});
         background-repeat: no-repeat;
         background-size: cover;
         background-position: center;
