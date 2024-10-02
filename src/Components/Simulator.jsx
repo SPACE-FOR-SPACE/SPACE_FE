@@ -1,25 +1,19 @@
+import Stage from "./Stage";
 import styled from "styled-components";
 import Player1 from "../assets/Map/Player_boy.svg"
+import Mushroom from "../assets/Map/Object/mushroom.svg"
+import Snake from "../assets/Map/Object/snake.svg"
+import Thorn from "../assets/Map/Object/thorn.svg"
 
-export default function Simulator() {
+export default function Simulator({array, id}) {
     const item = {
         0: Player1,
-        1: "목",
+        1: [Mushroom, Snake, Thorn],
         2: "길",
         3: "벽",
         4: "지",
         5: "행",
     }
-
-    const array = [
-        [3, 3, 3, 3, 3, 3, 3],
-        [3, 0, 2, 2, 2, 2, 3],
-        [3, 3, 3, 3, 3, 2, 3],
-        [3, 3, 3, 3, 3, 7, 3],
-        [3, 3, 3, 3, 3, 2, 3],
-        [3, 1, 2, 2, 2, 8, 3],
-        [3, 3, 3, 3, 3, 3, 3]
-    ];
 
     return (
         <SimulBg>
@@ -28,12 +22,13 @@ export default function Simulator() {
                     {array.map((row, rowIndex) => (
                         <tr key={rowIndex}>
                             {row.map((cell, cellIndex) => (
-                                <Piece key={cellIndex} img={item[cell]}></Piece>
+                                <Piece key={cellIndex} img={cell == 1 ? item[cell][id-1] : item[cell]}></Piece>
                             ))}
                         </tr>
                     ))}
                 </tbody>
             </Map>
+            <Stage />
         </SimulBg>
     );
 }
@@ -53,15 +48,16 @@ const SimulBg = styled.div`
     user-select: none;
     overflow: hidden;
 `
-
 const Map = styled.table`
     position: absolute;
     width: 80vmin;
     height: 80vmin;
-    background-color: #D29F65;
-    border: 0.5vh solid #875300;
+    background-color: rgba(255, 231, 204, 0.7);
+    border: 0.5vh solid rgba(0, 0, 0, 0.5);
+    border-radius: 5vh;
     border-collapse: collapse;
     top: 1vh;
+    overflow: hidden;
 `
 
 const Piece = styled.td`
@@ -69,7 +65,7 @@ const Piece = styled.td`
     width: calc(100% / 7);
     height: calc(100% / 7);
     aspect-ratio: 1 / 1;
-    border: 0.5vh solid #875300;
+    border: 0.5vh solid rgba(0, 0, 0, 0.5);
     background-image: ${({ img }) => `url(${img})`};
     background-size: contain;
     background-position: center;

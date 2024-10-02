@@ -1,33 +1,43 @@
 import GlobalStyles from "./GlobalStyle";
-import styled, {keyframes} from "styled-components";
+import styled, { keyframes } from "styled-components";
 import redRoket from "../../assets/etc/Video/red-spaceship.webm"
 import blueRoket from "../../assets/etc/Video/blue-spaceship.webm"
-import { useRef } from "react";
+import { useEffect, useRef, useState } from "react";
+
 
 export default function Loading() {
     const videoRef = useRef(null);
     const random = Math.floor(Math.random() * 2) + 1;
+    const [loading, setLoading] = useState(true);
 
-    return (
+    useEffect(() => {
+        const timer = setTimeout(() => {
+            setLoading(false);
+        }, 2000);
+
+        return () => clearTimeout(timer);
+    }, []);
+
+    return loading ? (
         <>
             <GlobalStyles />
             <Container>
                 <Roket ref={videoRef} autoPlay muted loop>
                     {
-                        random == 1 ? <source src={redRoket} type="video/webm" />:
-                        <source src={blueRoket} type="video/webm" />
+                        random == 1 ? <source src={redRoket} type="video/webm" /> :
+                            <source src={blueRoket} type="video/webm" />
                     }
                 </Roket>
                 <Load>
-                    <Point t={0}/>
-                    <Point t={0.5}/>
-                    <Point t={1}/>
-                    <Point t={1.5}/>
-                    <Point t={2}/>
+                    <Point t={0} />
+                    <Point t={0.5} />
+                    <Point t={1} />
+                    <Point t={1.5} />
+                    <Point t={2} />
                 </Load>
             </Container>
         </>
-    )
+    ) : null;
 }
 
 const RoketAnime = keyframes`
@@ -65,14 +75,14 @@ const Roket = styled.video`
     animation: ${RoketAnime} 3s infinite ease-in-out;
 `
 
-const Load = styled.div `
+const Load = styled.div`
     position: absolute;
     top: 55vh;
     width: 50vh;
     height: 5vh;
 `
 
-const Point = styled.div `
+const Point = styled.div`
     float: left;
     margin-left: 4vh;
     margin-right: 4vh;

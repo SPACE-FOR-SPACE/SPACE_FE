@@ -1,26 +1,37 @@
-import styled from "styled-components"
+import styled from "styled-components";
 
-export default function Ballon({Text}) {
+export default function Ballon({ User, Text, Num }) {
+    const direction = User === true ? "left" : "right";
+    const bgColor = User === true ? "#FFE5A2" : "#BBF8FF";
+
     return (
-        <Box>
-            {Text}
-            <Triangle />
-        </Box>
+        <Container $flex={direction}>
+            <Box $bg={bgColor}>
+                <TextBox>{Text}</TextBox>
+                <Triangle $bg={bgColor} $dir={direction}/>
+            </Box>
+        </Container>
     );
 }
 
+const Container = styled.div`
+    display: flex;
+    justify-content: ${({ $flex }) => $flex === "left" ? "flex-end" : "flex-start"};
+    margin-bottom: 3vh;
+`;
+
 const Box = styled.div`
     position: relative;
-    width: 50vh;
-    height: 10vh;
-    background-color: #FFE5A2;
+    width: auto;
+    max-width: 60vh;
+    min-height: 5vh;
+    background-color: ${({ $bg }) => $bg};
     border-radius: 2vh;
-    margin-bottom: 3vh;
-    margin-right: 6vh;
     margin-left: 6vh;
-    font-size: 5vh;
-    float: right;
-`
+    margin-right: 6vh;
+    font-size: 2vh;
+    text-align: left;
+`;
 
 const Triangle = styled.div`
     position: absolute;
@@ -28,7 +39,13 @@ const Triangle = styled.div`
     height: 0;
     border-top: 1.5vh solid transparent;
     border-bottom: 1.5vh solid transparent;
-    border-left: 5vh solid #FFE5A2;
-    top: 6vh;
-    right: -3vh;
-`
+    ${({ $bg, $dir }) => $dir === "left" ? `border-left: 5vh solid ${$bg}` : `border-right: 5vh solid ${$bg}`};
+    bottom: 0.5vh;
+    ${({ $dir }) => $dir === "left" ? "right: -3vh;" : "left: -3vh;"}
+`;
+
+const TextBox = styled.div`
+    color: black;
+    font-weight: bold;
+    padding: 2vh;
+`;

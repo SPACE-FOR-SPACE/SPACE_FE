@@ -5,21 +5,66 @@ import { PlanetObj } from "./Object";
 import { useNavigate } from "react-router-dom";
 import Simulator from "./Simulator";
 import Ballon from "./Ballon";
+import ObjectImg from "./ObjectImg";
 import { useState, useRef, useEffect } from "react";
+import CheckList from "./CheckList";
+import { Down, Up, Left, Right } from "../Functions/Move";
 
-export default function Chat({Obj, size, left, bottom}) {
+export default function Chat({ Obj, size, left, bottom, anime, id, text }) {
     const navigate = useNavigate();
     const imageSrc = PlanetObj[0][Obj];
-    const [input, setInput] = useState(""); 
-    const [Text, SetText] = useState([]);
+    const [input, setInput] = useState("");
     const chatingRef = useRef(null);
     const inputRef = useRef(null);
+    const [array, setArray] = useState([
+        [2, 2, 2, 2, 2, 2, 2],
+        [2, 0, 2, 2, 2, 2, 2],
+        [2, 2, 2, 2, 2, 2, 2],
+        [2, 2, 2, 2, 2, 1, 2],
+        [2, 2, 2, 2, 2, 2, 2],
+        [2, 2, 2, 2, 2, 2, 2],
+        [2, 2, 2, 2, 2, 2, 2]
+    ]
+    );
+
+    const [Text, SetText] = useState(text);
 
     const TextInput = () => {
         if (input.trim()) {
-            SetText([...Text, input]);
+            const updatedText = [...Text];
+            updatedText[id - 1] = [...updatedText[id - 1], { User: true, Text: input, Type: "B" }];
+            SetText(updatedText);
+            let Temp = input;
             setInput("");
             inputRef.current.focus();
+
+            setTimeout(() => {
+                const directionMatch = Temp.match(/(위쪽|아래쪽|오른쪽|왼쪽)\s*(\d*)/g);  // 모든 방향과 숫자 추출
+                if (directionMatch) {
+                    let totalDelay = 0;  // 각 동작 사이의 지연 시간을 계산하기 위한 변수
+
+                    directionMatch.forEach((match) => {
+                        const parts = match.match(/(위쪽|아래쪽|오른쪽|왼쪽)\s*(\d*)/);  // 각각의 매칭 부분 추출
+                        const direction = parts[1];  // 방향
+                        const steps = parseInt(parts[2], 10) || 1;  // 숫자가 없으면 1로 처리
+
+                        setTimeout(() => {
+                            if (direction === "위쪽")
+                                Up(array, setArray, steps);
+                            else if (direction === "아래쪽")
+                                Down(array, setArray, steps);
+                            else if (direction === "오른쪽")
+                                Right(array, setArray, steps);
+                            else if (direction === "왼쪽")
+                                Left(array, setArray, steps);
+                        }, totalDelay);
+
+                        // 각 움직임 당 지연 시간 추가 (500ms * steps)
+                        totalDelay += steps * 500;
+                    });
+                }
+            }, 500);
+
         }
     };
 
@@ -31,7 +76,7 @@ export default function Chat({Obj, size, left, bottom}) {
 
     useEffect(() => {
         if (chatingRef.current) {
-            chatingRef.current.scrollTop = chatingRef.current.scrollHeight; // 강제적으로 스크롤을 맨 아래로
+            chatingRef.current.scrollTop = chatingRef.current.scrollHeight;
         }
     }, [Text]);
 
@@ -41,18 +86,20 @@ export default function Chat({Obj, size, left, bottom}) {
                 <BackArrow src={back} />
                 <BackText>뒤로가기</BackText>
             </Back>
-            <Simulator />
+            <Simulator array={array} id={id} />
             <ChatBg>
                 <Chating ref={chatingRef}>
-                    {Text.map((item, index) => (
-                        <Ballon key={index} Text={item}/>
+                    {Text[id - 1].map((item, index) => (
+                        item.Type == "B" ?
+                            <Ballon key={index} User={item.User} Num={index} Text={item.Text} /> :
+                            <CheckList key={index} Text={item.Text} />
                     ))}
                 </Chating>
                 {
-                    imageSrc && <ObjImg src={imageSrc} size={size} left={left} bottom={bottom}/>
+                    imageSrc && <ObjectImg src={imageSrc} size={size} left={left} bottom={bottom} anime={anime} />
                 }
                 <InputBox>
-                    <Input ref={inputRef} value={input} onChange={(e) => setInput(e.target.value)} onKeyDown={InputEnter}/>
+                    <Input ref={inputRef} value={input} onChange={(e) => setInput(e.target.value)} onKeyDown={InputEnter} />
                     <InputBtn onClick={() => TextInput()}>
                         <Arrow src={arrow} alt="send" />
                     </InputBtn>
@@ -62,7 +109,7 @@ export default function Chat({Obj, size, left, bottom}) {
     );
 }
 
-const Container = styled.div `
+const Container = styled.div`
     display: grid;
     grid-template-columns: 1fr 1fr;
     align-items: center;
@@ -70,7 +117,7 @@ const Container = styled.div `
     height: 100vh;
 `
 
-const ChatBg = styled.div `
+const ChatBg = styled.div`
     position: relative;
     border-radius: 5%;
     background: rgba(255, 255, 255, 0.15);
@@ -88,7 +135,7 @@ const ChatBg = styled.div `
     overflow: hidden;
 `
 
-const Chating = styled.div `
+const Chating = styled.div`
     position: absolute;
     background-color: none;
     overflow-y: scroll;
@@ -115,20 +162,7 @@ const Chating = styled.div `
     }
 `
 
-const ObjImg = styled.img `
-    position: absolute;
-    width: ${({ size }) => `${size}%`};
-    height: ${({ size }) => `${size}%`};
-    left: ${({ left }) => `${left}%`};
-    bottom: ${({ bottom }) => `${bottom}%`};
-    -webkit-user-drag: none;
-    -moz-user-drag: none;
-    -ms-user-drag: none;
-    user-select: none;
-    z-index:-1;
-` 
-
-const InputBox = styled.label `
+const InputBox = styled.label`
     position: relative;
     background-color: white;
     border: none;
@@ -141,10 +175,10 @@ const InputBox = styled.label `
     align-items: center;
 `
 
-const Input = styled.input `
+const Input = styled.input`
     position: relative;
-    top: 30%;
-    margin-left: 5%;
+    top: 25%;
+    margin-left: 4%;
     display: flex;
     border: none;
     font-size:3vh;
@@ -155,7 +189,7 @@ const Input = styled.input `
     }
 `
 
-const InputBtn = styled.button `
+const InputBtn = styled.button`
     position: absolute;
     width: 7vh;
     height: 7vh;
@@ -176,12 +210,12 @@ const InputBtn = styled.button `
     }
 `
 
-const Arrow = styled.img `
+const Arrow = styled.img`
     width: 4vh;
     height: 4vh;
 `
 
-const Back = styled.div `
+const Back = styled.div`
     width: 20vh;
     position: absolute;
     left: 2vh;
@@ -193,13 +227,13 @@ const Back = styled.div `
     cursor: pointer;
 `
 
-const BackArrow = styled.img `
+const BackArrow = styled.img`
     position: absolute;
     top: -1vh;
     left: 2vh;
     width: 3vh;
 `
-const BackText = styled.span `
+const BackText = styled.span`
     position: absolute;
     top: -1.5vh;
     left: 4vh;
