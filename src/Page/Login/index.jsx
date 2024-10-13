@@ -1,4 +1,4 @@
-import GlobalStyles from "./GlobalStyle";
+import GlobalStyles from "../BasicBg";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
 import * as S from './style'
@@ -6,6 +6,8 @@ import naver from "../../assets/etc/Login/naver.svg";
 import google from "../../assets/etc/Login/google.svg";
 import kakao from "../../assets/etc/Login/kakao.svg";
 import { useState } from "react";
+
+const API_URL = "https://c4a6-211-182-230-53.ngrok-free.app";
 
 export default function Login() {
     const navigate = useNavigate();
@@ -27,7 +29,7 @@ export default function Login() {
 
         try {
             const response = await axios.post(
-                'https://658b-211-182-230-53.ngrok-free.app/login',
+                API_URL+'/login',
                 {
                     email: email,
                     password: password
@@ -35,10 +37,11 @@ export default function Login() {
                 {
                     headers: {
                         'Content-Type': 'application/json'
-                    }
+                    },
+                    withCredentials: true
                 }
             );
-            console.log('로그인 성공:', response.data);
+            console.log('로그인 성공:', response);
             navigate(`/`);
 
         } catch (error) {

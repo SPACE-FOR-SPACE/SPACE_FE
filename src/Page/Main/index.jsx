@@ -1,5 +1,5 @@
 import * as S from './style'
-import GlobalStyles from './GlobalStyle.jsx'
+import GlobalStyles from './Background.jsx'
 
 import Planet from '../../Components/Planet.jsx'
 import green from '../../assets/Planet/green_planet.svg'

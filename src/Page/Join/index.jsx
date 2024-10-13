@@ -1,10 +1,12 @@
 import Roket from "../../assets/etc/Roket.svg";
 import Check from "../../assets/etc/Check.svg";
 import * as S from './style';
-import GlobalStyles from './GlobalStyle.jsx';
+import GlobalStyles from '../BasicBg.jsx';
 import { useState, useEffect } from "react";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
+
+const API_URL = "https://c4a6-211-182-230-53.ngrok-free.app";
 
 export default function Join() {
     const navigate = useNavigate();
@@ -43,7 +45,7 @@ export default function Join() {
 
         try {
             const response = await axios.post(
-                'https://658b-211-182-230-53.ngrok-free.app/join',
+                API_URL+'/join',
                 {
                     email: email,
                     username: username,

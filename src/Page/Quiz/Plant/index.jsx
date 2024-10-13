@@ -1,6 +1,6 @@
 import { useParams } from 'react-router-dom';
 
-import GlobalStyles from './GlobalStyle.jsx'
+import QuizBg from "../QuizBackground.jsx";
 import Chat from '../../../Components/Chat.jsx'
 import Background from './Background.jsx';
 
@@ -80,7 +80,7 @@ export default function Plant() {
     ]
     return (
         <>
-            <GlobalStyles />
+            <QuizBg $bg={"plant"}/>
             <Background />
             <Chat Obj={'none'} size={45} left={0} bottom={-2} anime={false} id={id} text={text}/>
         </>

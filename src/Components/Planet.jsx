@@ -17,7 +17,7 @@ export default function Planet({ src, size, x1, y1, x2, y2, panime, color, size2
     }
 
     return (
-        <Container size={size} x1={x1} y1={y1} panime={panime} onClick={() => {lock ? alert("잠겨있습니다") : navigate(`/${planets[title]}/1`)}}>
+        <Container size={size} x1={x1} y1={y1} panime={panime} onClick={() => {lock ? navigate(`/inventory`) : navigate(`/${planets[title]}/1`)}}>
             <PlanetMain src={src} size={size} />
             {lock ? <Lock src={LockImg} alt="lock" x={LockXY[title][0]} y={LockXY[title][1]}/> : 
             <Light size={size} color={color} x2={x2} y2={y2} size2={size2} />}

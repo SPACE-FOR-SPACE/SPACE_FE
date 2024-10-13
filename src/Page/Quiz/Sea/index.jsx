@@ -1,6 +1,6 @@
 import { useParams } from 'react-router-dom';
 
-import GlobalStyles from './GlobalStyle.jsx'
+import QuizBg from "../QuizBackground.jsx";
 import Chat from '../../../Components/Chat.jsx'
 
 export default function Sea() {
@@ -80,7 +80,7 @@ export default function Sea() {
     
     return (
         <>
-            <GlobalStyles/>
+            <QuizBg $bg={"sea"}/>
             <Chat Obj={'reef'} size={45} left={-2} bottom={-5} anime={false} id={id} text={text}/>
         </>
     )

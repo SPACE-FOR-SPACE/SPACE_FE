@@ -39,14 +39,14 @@ export default function Chat({ Obj, size, left, bottom, anime, id, text }) {
             inputRef.current.focus();
 
             setTimeout(() => {
-                const directionMatch = Temp.match(/(위쪽|아래쪽|오른쪽|왼쪽)\s*(\d*)/g);  // 모든 방향과 숫자 추출
+                const directionMatch = Temp.match(/(위쪽|아래쪽|오른쪽|왼쪽)\s*(\d*)/g);
                 if (directionMatch) {
-                    let totalDelay = 0;  // 각 동작 사이의 지연 시간을 계산하기 위한 변수
+                    let totalDelay = 0;
 
                     directionMatch.forEach((match) => {
-                        const parts = match.match(/(위쪽|아래쪽|오른쪽|왼쪽)\s*(\d*)/);  // 각각의 매칭 부분 추출
-                        const direction = parts[1];  // 방향
-                        const steps = parseInt(parts[2], 10) || 1;  // 숫자가 없으면 1로 처리
+                        const parts = match.match(/(위쪽|아래쪽|오른쪽|왼쪽)\s*(\d*)/);
+                        const direction = parts[1];
+                        const steps = parseInt(parts[2], 10) || 1;
 
                         setTimeout(() => {
                             if (direction === "위쪽")
@@ -59,7 +59,6 @@ export default function Chat({ Obj, size, left, bottom, anime, id, text }) {
                                 Left(array, setArray, steps);
                         }, totalDelay);
 
-                        // 각 움직임 당 지연 시간 추가 (500ms * steps)
                         totalDelay += steps * 500;
                     });
                 }

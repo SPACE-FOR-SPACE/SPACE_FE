@@ -1,4 +1,4 @@
-import GlobalStyles from "./GlobalStyle";
+import GlobalStyles from "../BasicBg";
 import styled, { keyframes } from "styled-components";
 import redRoket from "../../assets/etc/Video/red-spaceship.webm"
 import blueRoket from "../../assets/etc/Video/blue-spaceship.webm"

@@ -2,7 +2,7 @@ import { useParams } from 'react-router-dom';
 
 import Chat from '../../../Components/Chat.jsx'
 import Cloud from './Cloud.jsx'
-import GlobalStyles from './GlobalStyle.jsx'
+import QuizBg from "../QuizBackground.jsx";
 
 export default function Volcano() {
     const { id } = useParams();
@@ -80,7 +80,7 @@ export default function Volcano() {
     ];
     return (
         <>
-            <GlobalStyles/>
+            <QuizBg $bg={"volcano"}/>
             <Cloud />
             <Chat Obj={'volcano'} size={120} left={-12} bottom={-5} anime={true} id={id} text={text}/>
         </>
