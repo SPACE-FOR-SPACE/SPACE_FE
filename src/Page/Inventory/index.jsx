@@ -2,7 +2,7 @@ import axios from "axios";
 import { useEffect, useState } from "react";
 import Loading from "../Loading";
 
-const API_URL = "https://c4a6-211-182-230-53.ngrok-free.app";
+const API_URL = "https://port-0-space-server-m1oxeihpad978327.sel4.cloudtype.app"; 
 
 export default function Inventory() {
     const [test, setTest] = useState();
@@ -16,6 +16,7 @@ export default function Inventory() {
                         'Content-Type': `application/json`,
                         'ngrok-skip-browser-warning': 'true',
                     },
+                    withCredentials: true
                 });
                 console.log(response);
                 console.log("성공");
