@@ -7,7 +7,7 @@ import google from "../../assets/etc/Login/google.svg";
 import kakao from "../../assets/etc/Login/kakao.svg";
 import { useState } from "react";
 
-const API_URL = "https://c4a6-211-182-230-53.ngrok-free.app";
+const API_URL = "https://port-0-space-server-m1oxeihpad978327.sel4.cloudtype.app";
 
 export default function Login() {
     const navigate = useNavigate();
