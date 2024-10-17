@@ -8,67 +8,100 @@ import Ballon from "./Ballon";
 import ObjectImg from "./ObjectImg";
 import { useState, useRef, useEffect } from "react";
 import CheckList from "./CheckList";
+import axios from "axios";
 import { Down, Up, Left, Right } from "../Functions/Move";
 
-export default function Chat({ Obj, size, left, bottom, anime, id, text }) {
+const API_URL = "https://port-0-space-server-m1oxeihpad978327.sel4.cloudtype.app";
+
+export default function Chat({ Obj, size, left, bottom, anime, id, text, map }) {
     const navigate = useNavigate();
     const imageSrc = PlanetObj[0][Obj];
     const [input, setInput] = useState("");
     const chatingRef = useRef(null);
     const inputRef = useRef(null);
-    const [array, setArray] = useState([
-        [2, 2, 2, 2, 2, 2, 2],
-        [2, 0, 2, 2, 2, 2, 2],
-        [2, 2, 2, 2, 2, 2, 2],
-        [2, 2, 2, 2, 2, 1, 2],
-        [2, 2, 2, 2, 2, 2, 2],
-        [2, 2, 2, 2, 2, 2, 2],
-        [2, 2, 2, 2, 2, 2, 2]
-    ]
-    );
+    const [array, setArray] = useState([]);
+    const [load, setLoad] = useState(false);
+    const [Text, setText] = useState([]);
 
-    const [Text, SetText] = useState(text);
+    useEffect(() => {
+        setText(text)
+        setArray(map);
+    }, []);
 
     const TextInput = () => {
         if (input.trim()) {
-            const updatedText = [...Text];
-            updatedText[id - 1] = [...updatedText[id - 1], { User: true, Text: input, Type: "B" }];
-            SetText(updatedText);
-            let Temp = input;
-            setInput("");
-            inputRef.current.focus();
+            const Chating = async () => {
+                try {
+                    const newText = [...Text, { User: true, Text: input, Type: "B" }];
+                    setText(newText);
+                    const Temp = input;
+                    setInput("");
+                    inputRef.current.focus();
 
-            setTimeout(() => {
-                const directionMatch = Temp.match(/(위쪽|아래쪽|오른쪽|왼쪽)\s*(\d*)/g);
-                if (directionMatch) {
-                    let totalDelay = 0;
+                    setLoad(true);
 
-                    directionMatch.forEach((match) => {
-                        const parts = match.match(/(위쪽|아래쪽|오른쪽|왼쪽)\s*(\d*)/);
-                        const direction = parts[1];
-                        const steps = parseInt(parts[2], 10) || 1;
+                    const loadingText = { User: false, Text: "...", Type: "B" };
+                    setText(prevText => [...prevText, loadingText]);
 
-                        setTimeout(() => {
-                            if (direction === "위쪽")
-                                Up(array, setArray, steps);
-                            else if (direction === "아래쪽")
-                                Down(array, setArray, steps);
-                            else if (direction === "오른쪽")
-                                Right(array, setArray, steps);
-                            else if (direction === "왼쪽")
-                                Left(array, setArray, steps);
-                        }, totalDelay);
+                    const response = await axios.post(
+                        `${API_URL}/chats/${id}`,
+                        {
+                            userChat: Temp,
+                            type: 'CODE'
+                        },
+                        {
+                            headers: {
+                                'Content-Type': 'application/json'
+                            },
+                            withCredentials: true
+                        }
+                    );
 
-                        totalDelay += steps * 500;
+                    setText(prevText => {
+                        const updatedText = prevText.filter(item => item.Text !== "...");
+                        return [...updatedText, { User: false, Text: response.data.feedback, Type: "B" }];
+                    });
+                    const moves = response.data.move;
+                    for (const direction of moves) {
+                        await new Promise(resolve => {
+                            setTimeout(() => {
+                                switch (direction) {
+                                    case 'r':
+                                        Right(array, setArray);
+                                        break;
+                                    case 'l':
+                                        Left(array, setArray);
+                                        break;
+                                    case 'u':
+                                        Up(array, setArray);
+                                        break;
+                                    case 'd':
+                                        Down(array, setArray);
+                                        break;
+                                    default:
+                                        console.warn(`알 수 없는 방향: ${direction}`);
+                                }
+                                resolve();
+                            }, 500);
+                        });
+                    }
+
+                } catch (error) {
+                    console.error('실패', error);
+                    console.error('에러 응답:', error.response);
+                    setText(prevText => {
+                        const updatedText = prevText.filter(item => item.Text !== "...");
+                        return [...updatedText, { User: false, Text: "죄송합니다. 오류가 발생했습니다.", Type: "B" }];
                     });
                 }
-            }, 500);
-
+                setLoad(false);
+            };
+            Chating();
         }
     };
 
     const InputEnter = (e) => {
-        if (e.key === "Enter") {
+        if (e.key === "Enter" && !load) {
             TextInput();
         }
     };
@@ -88,7 +121,7 @@ export default function Chat({ Obj, size, left, bottom, anime, id, text }) {
             <Simulator array={array} id={id} />
             <ChatBg>
                 <Chating ref={chatingRef}>
-                    {Text[id - 1].map((item, index) => (
+                    {Text.map((item, index) => (
                         item.Type == "B" ?
                             <Ballon key={index} User={item.User} Num={index} Text={item.Text} /> :
                             <CheckList key={index} Text={item.Text} />
@@ -99,7 +132,7 @@ export default function Chat({ Obj, size, left, bottom, anime, id, text }) {
                 }
                 <InputBox>
                     <Input ref={inputRef} value={input} onChange={(e) => setInput(e.target.value)} onKeyDown={InputEnter} />
-                    <InputBtn onClick={() => TextInput()}>
+                    <InputBtn onClick={() => TextInput()} disabled={load}>
                         <Arrow src={arrow} alt="send" />
                     </InputBtn>
                 </InputBox>

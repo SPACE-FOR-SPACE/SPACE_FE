@@ -14,7 +14,6 @@ export default function Simulator({array, id}) {
         4: "지",
         5: "행",
     }
-
     return (
         <SimulBg>
             <Map>

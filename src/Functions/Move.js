@@ -9,62 +9,46 @@ function MyXY(array) {
     return null;
 }
 
-export function Up(arr, setArr, steps) {
+export function Up(arr, setArr) {
     const newArray = [...arr];
     let [X, Y] = MyXY(newArray);
 
-    for (let i = 0; i < steps; i++) {
-        setTimeout(() => {
-            if (X > 0) {
-                [newArray[X][Y], newArray[X - 1][Y]] = [2, newArray[X][Y]]; // 0을 2로 변경
-                X--; // 위쪽으로 한 칸 이동
-                setArr([...newArray]); // 배열을 업데이트
-            }
-        }, i * 500); // 0.5초 간격으로 실행
+    if (X > 0) {
+        [newArray[X][Y], newArray[X - 1][Y]] = [2, newArray[X][Y]]; // 0을 2로 변경
+        setArr([...newArray]); // 배열을 업데이트
     }
 }
 
-export function Down(arr, setArr, steps) {
+export function Down(arr, setArr) {
     const newArray = [...arr];
     let [X, Y] = MyXY(newArray);
 
-    for (let i = 0; i < steps; i++) {
-        setTimeout(() => {
-            if (X < newArray.length - 1) {
-                [newArray[X][Y], newArray[X + 1][Y]] = [2, newArray[X][Y]]; // 0을 2로 변경
-                X++; // 아래쪽으로 한 칸 이동
-                setArr([...newArray]); // 배열을 업데이트
-            }
-        }, i * 500); // 0.5초 간격으로 실행
+    if (X < newArray.length - 1) {
+        [newArray[X][Y], newArray[X + 1][Y]] = [2, newArray[X][Y]]; // 0을 2로 변경
+        setArr([...newArray]); // 배열을 업데이트
     }
 }
 
-export function Left(arr, setArr, steps) {
+export function Left(arr, setArr) {
     const newArray = [...arr];
     let [X, Y] = MyXY(newArray);
 
-    for (let i = 0; i < steps; i++) {
-        setTimeout(() => {
-            if (Y > 0) {
-                [newArray[X][Y], newArray[X][Y - 1]] = [2, newArray[X][Y]]; // 0을 2로 변경
-                Y--; // 왼쪽으로 한 칸 이동
-                setArr([...newArray]); // 배열을 업데이트
-            }
-        }, i * 500); // 0.5초 간격으로 실행
+    if (Y > 0) {
+        [newArray[X][Y], newArray[X][Y - 1]] = [2, newArray[X][Y]]; // 0을 2로 변경
+        setArr([...newArray]); // 배열을 업데이트
     }
 }
 
-export function Right(arr, setArr, steps) {
-    const newArray = [...arr];
+export function Right(arr, setArr) {
+    if (!Array.isArray(arr)) {
+        console.error('Right 함수에 전달된 arr가 배열이 아닙니다:', arr);
+        return;
+    }
+    const newArray = arr.map(row => [...row]);  // 2차원 배열의 깊은 복사
     let [X, Y] = MyXY(newArray);
 
-    for (let i = 0; i < steps; i++) {
-        setTimeout(() => {
-            if (Y < newArray[X].length - 1) {
-                [newArray[X][Y], newArray[X][Y + 1]] = [2, newArray[X][Y]]; // 0을 2로 변경
-                Y++; // 오른쪽으로 한 칸 이동
-                setArr([...newArray]); // 배열을 업데이트
-            }
-        }, i * 500); // 0.5초 간격으로 실행
+    if (Y < newArray[X].length - 1) {
+        [newArray[X][Y], newArray[X][Y + 1]] = [2, newArray[X][Y]]; // 0을 2로 변경
+        setArr(newArray); // 배열을 업데이트
     }
 }

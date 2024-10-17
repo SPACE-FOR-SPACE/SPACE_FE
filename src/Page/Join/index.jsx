@@ -6,7 +6,7 @@ import { useState, useEffect } from "react";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
 
-const API_URL = "https://c4a6-211-182-230-53.ngrok-free.app";
+const API_URL = "https://port-0-space-server-m1oxeihpad978327.sel4.cloudtype.app";
 
 export default function Join() {
     const navigate = useNavigate();
@@ -18,11 +18,7 @@ export default function Join() {
         confirmPassword: ""
     });
     const [isFormValid, setIsFormValid] = useState(false);
-
-    function test() {
-        setStep((step % 3) + 1);
-    }
-
+    
     useEffect(() => {
         const { username, email, password, confirmPassword } = inputs;
         if (username && email && password && confirmPassword) {
@@ -58,7 +54,7 @@ export default function Join() {
                     }
                 }
             );
-            console.log('회원가입 성공:', response.data);
+            console.log('회원가입 성공:', response);
             navigate(`/login`);
 
         } catch (error) {
