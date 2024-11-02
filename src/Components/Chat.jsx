@@ -40,7 +40,7 @@ export default function Chat({ Obj, size, left, bottom, anime, id, text, map }) 
 
                     setLoad(true);
 
-                    const loadingText = { User: false, Text: "...", Type: "B" };
+                    const loadingText = { User: false, Text: "⦁ ⦁ ⦁", Type: "B" };
                     setText(prevText => [...prevText, loadingText]);
 
                     const response = await axios.post(
@@ -57,8 +57,9 @@ export default function Chat({ Obj, size, left, bottom, anime, id, text, map }) 
                         }
                     );
 
+                    console.log(response.data);
                     setText(prevText => {
-                        const updatedText = prevText.filter(item => item.Text !== "...");
+                        const updatedText = prevText.filter(item => item.Text !== "⦁ ⦁ ⦁");
                         return [...updatedText, { User: false, Text: response.data.feedback, Type: "B" }];
                     });
                     const moves = response.data.move;
@@ -78,6 +79,9 @@ export default function Chat({ Obj, size, left, bottom, anime, id, text, map }) 
                                     case 'd':
                                         Down(array, setArray);
                                         break;
+                                    case '5':
+                                        console.log("행동");
+                                        break;
                                     default:
                                         console.warn(`알 수 없는 방향: ${direction}`);
                                 }
@@ -90,7 +94,7 @@ export default function Chat({ Obj, size, left, bottom, anime, id, text, map }) 
                     console.error('실패', error);
                     console.error('에러 응답:', error.response);
                     setText(prevText => {
-                        const updatedText = prevText.filter(item => item.Text !== "...");
+                        const updatedText = prevText.filter(item => item.Text !== "⦁ ⦁ ⦁");
                         return [...updatedText, { User: false, Text: "죄송합니다. 오류가 발생했습니다.", Type: "B" }];
                     });
                 }

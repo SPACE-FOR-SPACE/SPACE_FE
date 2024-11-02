@@ -19,7 +19,7 @@ export default function Plant() {
         setLoading(true);
         const QuizData = async () => {
             try {
-                const response1 = await axios.get(`${API_URL}/chapters/1/steps/${id}`, {
+                const response1 = await axios.get(`${API_URL}/quizzes/${id}`, {
                     headers: {
                         'Content-Type': 'application/json',
                         'ngrok-skip-browser-warning': 'true',

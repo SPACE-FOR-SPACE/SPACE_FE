@@ -18,7 +18,7 @@ export default function Join() {
         confirmPassword: ""
     });
     const [isFormValid, setIsFormValid] = useState(false);
-    
+
     useEffect(() => {
         const { username, email, password, confirmPassword } = inputs;
         if (username && email && password && confirmPassword) {
@@ -41,7 +41,7 @@ export default function Join() {
 
         try {
             const response = await axios.post(
-                API_URL+'/join',
+                API_URL + '/join',
                 {
                     email: email,
                     username: username,
@@ -92,12 +92,14 @@ export default function Join() {
                     </tr>
                     <tr>
                         <S.Lname>이메일</S.Lname>
-                        <td><S.Input
-                            name="email"
-                            placeholder="이메일을 입력해주세요"
-                            value={inputs.email}
-                            onChange={handleInputChange}
-                        /></td>
+                        <td>
+                            <S.Input
+                                name="email"
+                                placeholder="이메일을 입력해주세요"
+                                value={inputs.email}
+                                onChange={handleInputChange} />
+                            <S.EmailCheckBtn>이메일 인증</S.EmailCheckBtn>
+                        </td>
                     </tr>
                     <tr>
                         <S.Lname>비밀번호</S.Lname>
@@ -130,4 +132,4 @@ export default function Join() {
             </S.Center>
         </div>
     );
-}
+} 

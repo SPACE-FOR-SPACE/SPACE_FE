@@ -95,7 +95,6 @@ export const JoinBtn = styled.button`
     border:none;
     border-radius:40px;
     cursor: pointer;
-    /* transition: 0.5s; */
 
     &:hover {
         background-color: #c8861b;
@@ -106,4 +105,8 @@ export const JoinBtn = styled.button`
         background-color: #7d5311;
         color:gray;
     }
+`
+
+export const EmailCheckBtn = styled.button`
+    margin:0 auto;
 `
