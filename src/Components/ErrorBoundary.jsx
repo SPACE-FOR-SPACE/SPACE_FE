@@ -2,8 +2,6 @@ import React from 'react';
 import axios from "axios";
 import Loading from '../Page/Loading';
 
-const API_URL = "https://port-0-space-server-m1oxeihpad978327.sel4.cloudtype.app";
-
 class ErrorBoundary extends React.Component {
     constructor(props) {
         super(props);
@@ -27,7 +25,7 @@ class ErrorBoundary extends React.Component {
     reissueToken = async () => {
         this.setState({ isReissuing: true });
         try {
-            await axios.post(API_URL + '/reissue');
+            await axios.post('api/reissue');
             window.location.reload();
         } catch (error) {
             console.error('토큰 재발급 실패', error);

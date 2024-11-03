@@ -40,15 +40,11 @@ export function Left(arr, setArr) {
 }
 
 export function Right(arr, setArr) {
-    if (!Array.isArray(arr)) {
-        console.error('Right 함수에 전달된 arr가 배열이 아닙니다:', arr);
-        return;
-    }
-    const newArray = arr.map(row => [...row]);  // 2차원 배열의 깊은 복사
+    const newArray = [...arr];
     let [X, Y] = MyXY(newArray);
 
     if (Y < newArray[X].length - 1) {
         [newArray[X][Y], newArray[X][Y + 1]] = [2, newArray[X][Y]]; // 0을 2로 변경
-        setArr(newArray); // 배열을 업데이트
+        setArr([...newArray]); // 배열을 업데이트
     }
 }

@@ -11,8 +11,6 @@ import CheckList from "./CheckList";
 import axios from "axios";
 import { Down, Up, Left, Right } from "../Functions/Move";
 
-const API_URL = "https://port-0-space-server-m1oxeihpad978327.sel4.cloudtype.app";
-
 export default function Chat({ Obj, size, left, bottom, anime, id, text, map }) {
     const navigate = useNavigate();
     const imageSrc = PlanetObj[0][Obj];
@@ -44,7 +42,7 @@ export default function Chat({ Obj, size, left, bottom, anime, id, text, map }) 
                     setText(prevText => [...prevText, loadingText]);
 
                     const response = await axios.post(
-                        `${API_URL}/chats/${id}`,
+                        `/api/chats/${id}`,
                         {
                             userChat: Temp,
                             type: 'CODE'

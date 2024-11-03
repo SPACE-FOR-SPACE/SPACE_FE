@@ -19,7 +19,8 @@ const App = () => {
     <ErrorBoundary>
       <Suspense fallback={<Loading />}>
         <Routes>
-          <Route path="/" exact element={<Main />} />
+          <Route path="/" element={<LandingPage />} />
+          <Route path="/main" exact element={<Main />} />
           <Route path="/join" element={<Join />} />
           <Route path="/login" element={<Login />} />
           <Route path="/sea/:id" element={<Sea />} />
@@ -27,9 +28,9 @@ const App = () => {
           <Route path="/plant" element={<PlantStage />} />
           <Route path="/plant/:id" element={<Plant />} />
           <Route path="/loading" element={<Loading />} />
-          <Route path="/inventory" element={<Inventory />} />
-          <Route path="/stages" element={<Stages />} /> 
-          <Route path="/landing" element={<LandingPage />} />
+          {/* <Route path="/inventory" element={<Inventory />} /> */}
+          <Route path="/stages" element={<Stages />} />
+
         </Routes>
       </Suspense>
     </ErrorBoundary>

@@ -6,20 +6,17 @@ import QuizBg from "../QuizBackground.jsx";
 import Chat from '../../../Components/Chat.jsx'
 import Background from './Background.jsx';
 
-const API_URL = "https://port-0-space-server-m1oxeihpad978327.sel4.cloudtype.app";
-
 export default function Plant() {
     const { id } = useParams();
     const [text, setText] = useState([]);
     const [map, setMap] = useState([]);
-    // const [step, ]
     const [loading, setLoading] = useState(true);
 
     useEffect(() => {
         setLoading(true);
         const QuizData = async () => {
             try {
-                const response1 = await axios.get(`${API_URL}/quizzes/${id}`, {
+                const response1 = await axios.get(`/api/quizzes/${id}`, {
                     headers: {
                         'Content-Type': 'application/json',
                         'ngrok-skip-browser-warning': 'true',
@@ -27,7 +24,7 @@ export default function Plant() {
                     withCredentials: true,
                 });
 
-                const response2 = await axios.get(`${API_URL}/checklists/quiz/${id}`, {
+                const response2 = await axios.get(`/api/checklists/quiz/${id}`, {
                     headers: {
                         'Content-Type': 'application/json',
                         'ngrok-skip-browser-warning': 'true',
@@ -47,7 +44,7 @@ export default function Plant() {
                     }))
                 ]);
                 setMap(response1.data.map);
-                console.log("성공");
+                console.log(response1.data);
                 setLoading(false);
             } catch (error) {
                 console.error('실패:', error);

@@ -41,7 +41,7 @@ export default function Join() {
 
         try {
             const response = await axios.post(
-                API_URL + '/join',
+                '/api/join',
                 {
                     email: email,
                     username: username,
@@ -51,7 +51,8 @@ export default function Join() {
                 {
                     headers: {
                         'Content-Type': 'application/json'
-                    }
+                    },
+                    withCredentials: true
                 }
             );
             console.log('회원가입 성공:', response);

@@ -4,23 +4,23 @@ export const Center = styled.div`
     margin: 0 auto;
     width: 50%;
     text-align: center;
-    margin-top: 5vh;
+    margin-top: 50px;
 `;
 
 
 export const Step = styled.div`
     position:relative;
     margin: 0 auto;
-    width: 80vh;
-    height: 2vh;
+    width: 600px;
+    height: 20px;
     border-radius: 100vh;
     background: #ACACAC;
 `
 
 export const IconSvg = styled.img`
-    width: 20vh;
-    height: 20vh;
-    top: -1vh;
+    width: 150px;
+    height: 150px;
+    top: -5px;
     position:absolute;
     -webkit-user-drag: none;
     -moz-user-drag: none;
@@ -31,9 +31,9 @@ export const IconSvg = styled.img`
 `
 
 export const RoketImg = styled.img`
-    width: 15vh;
-    height: 15vh;
-    top: -7.5vh;
+    width: 120px;
+    height: 120px;
+    top: -50px;
     z-index: 99;
     position:absolute;
     -webkit-user-drag: none;
