@@ -12,39 +12,43 @@ function MyXY(array) {
 export function Up(arr, setArr) {
     const newArray = [...arr];
     let [X, Y] = MyXY(newArray);
+    const targetX = X - 1;
 
-    if (X > 0) {
-        [newArray[X][Y], newArray[X - 1][Y]] = [2, newArray[X][Y]]; // 0을 2로 변경
-        setArr([...newArray]); // 배열을 업데이트
+    if (targetX >= 0 && newArray[targetX][Y] !== 3 && Math.floor(newArray[targetX][Y] / 2000) !== 1) {
+        [newArray[X][Y], newArray[targetX][Y]] = [2, newArray[X][Y]];
+        setArr([...newArray]);
     }
 }
 
 export function Down(arr, setArr) {
     const newArray = [...arr];
     let [X, Y] = MyXY(newArray);
+    const targetX = X + 1;
 
-    if (X < newArray.length - 1) {
-        [newArray[X][Y], newArray[X + 1][Y]] = [2, newArray[X][Y]]; // 0을 2로 변경
-        setArr([...newArray]); // 배열을 업데이트
+    if (targetX < newArray.length && newArray[targetX][Y] !== 3 && Math.floor(newArray[targetX][Y] / 2000) !== 1) {
+        [newArray[X][Y], newArray[targetX][Y]] = [2, newArray[X][Y]];
+        setArr([...newArray]);
     }
 }
 
 export function Left(arr, setArr) {
     const newArray = [...arr];
     let [X, Y] = MyXY(newArray);
+    const targetY = Y - 1;
 
-    if (Y > 0) {
-        [newArray[X][Y], newArray[X][Y - 1]] = [2, newArray[X][Y]]; // 0을 2로 변경
-        setArr([...newArray]); // 배열을 업데이트
+    if (targetY >= 0 && newArray[X][targetY] !== 3 && Math.floor(newArray[X][targetY] / 2000) !== 1) {
+        [newArray[X][Y], newArray[X][targetY]] = [2, newArray[X][Y]];
+        setArr([...newArray]);
     }
 }
 
 export function Right(arr, setArr) {
     const newArray = [...arr];
     let [X, Y] = MyXY(newArray);
+    const targetY = Y + 1;
 
-    if (Y < newArray[X].length - 1) {
-        [newArray[X][Y], newArray[X][Y + 1]] = [2, newArray[X][Y]]; // 0을 2로 변경
-        setArr([...newArray]); // 배열을 업데이트
+    if (targetY < newArray[X].length && newArray[X][targetY] !== 3 && Math.floor(newArray[X][targetY] / 2000) !== 1) {
+        [newArray[X][Y], newArray[X][targetY]] = [2, newArray[X][Y]];
+        setArr([...newArray]);
     }
 }

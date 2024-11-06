@@ -1,6 +1,8 @@
 import { useState, useEffect } from 'react';
+import axios from 'axios';
 import * as S from './style.js';
 import Plant1 from '../../assets/Landing/Plant1.svg';
+import Plant2 from '../../assets/Landing/Plant2.svg';
 import Star from '../../assets/Landing/Star.svg';
 import light from '../../assets/Landing/element/light.svg';
 import dark from '../../assets/Landing/element/dark.svg';
@@ -8,7 +10,45 @@ import { useNavigate } from 'react-router-dom';
 
 export default function LandingPage() {
   const [pos, setPos] = useState(1);
+  const [login, setLogin] = useState(false);
+  const [name, setName] = useState("");
   const navigate = useNavigate();
+
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        const response = await axios.get(`/api/check`, {
+          headers: {
+            'Content-Type': 'application/json',
+            'ngrok-skip-browser-warning': 'true',
+          },
+          withCredentials: true,
+        });
+        if (response.statusText === "OK") {
+          setLogin(true);
+        }
+      } catch (error) {
+        setLogin(false);
+      }
+    };
+
+    fetchData();
+  }, []);
+
+  async function Logout() {
+    try {
+      await axios.post('/api/logout', {}, {
+        headers: {
+          'Content-Type': 'application/json'
+        },
+        withCredentials: true
+      });
+      console.log('로그아웃');
+      window.location.reload();
+    } catch (error) {
+      console.error('로그아웃 실패', error);
+    }
+  }
 
   const scrollToSection = (index) => {
     const section = document.getElementById(`section-${index}`);
@@ -25,23 +65,44 @@ export default function LandingPage() {
       <S.Header>
         <S.Left>
           <S.Title>SPACE</S.Title>
-          <S.Menu active={String(pos === 1)} onClick={() => { setPos(1); scrollToSection(1); }}>메인</S.Menu>
-          {/* <S.Menu active={pos === 2} onClick={() => { setPos(2); scrollToSection(2); }}>프로젝트 소개</S.Menu>
-          <S.Menu active={pos === 3} onClick={() => { setPos(3); scrollToSection(3); }}>팀 소개</S.Menu>
-          <S.Menu active={pos === 4} onClick={() => { setPos(4); scrollToSection(4); }}>커뮤니티</S.Menu> */}
+          <S.Menu active={pos === 1} onClick={() => { setPos(1); scrollToSection(1); }}>메인</S.Menu>
+          <S.Menu active={pos === 2} onClick={() => { setPos(2); scrollToSection(2); }}>프로젝트 소개</S.Menu>
+          {/* <S.Menu active={pos === 3} onClick={() => { setPos(3); scrollToSection(3); }}>팀 소개</S.Menu> */}
+          {/* <S.Menu active={pos === 4} onClick={() => { setPos(4); scrollToSection(4); }}>커뮤니티</S.Menu> */}
         </S.Left>
-        <S.Right>
-          <S.Sign color={"#F9A723"} onClick={() => navigate(`/join`)}>회원가입</S.Sign>
-          <S.Sign color={"#ffffff"} onClick={() => navigate(`/login`)}>로그인</S.Sign>
-        </S.Right>
+        {
+          login ?
+            <S.Right>
+              <S.Sign color={"#ffffff"} onClick={() => Logout()}>로그아웃</S.Sign>
+            </S.Right> :
+            <S.Right>
+              <S.Sign color={"#F9A723"} onClick={() => navigate(`/join`)}>회원가입</S.Sign>
+              <S.Sign color={"#ffffff"} onClick={() => navigate(`/login`)}>로그인</S.Sign>
+            </S.Right>
+        }
       </S.Header>
       <S.Section id="section-1">
         <S.Light size={80} color={"#F99A00"} x={-15} y={15} />
-        <img src={Plant1} />
-        <S.MainTitle>시작해볼까요?</S.MainTitle>
+        <img className="Plant1" src={Plant1} />
+        <S.MainTitle1>시작해볼까요?</S.MainTitle1>
         <S.Btn>
-          <S.StartBtn onClick={() => navigate(`/main`)}>시작 <S.MarqueeStyle>➜</S.MarqueeStyle></S.StartBtn>
+          <S.StartBtn onClick={() => navigate(`/main`)}>
+            시작
+            <S.MarqueeStyle>➜</S.MarqueeStyle>
+          </S.StartBtn>
         </S.Btn>
+      </S.Section>
+      <S.Section id="section-2">
+        <img className="Plant2" src={Plant2} />
+        <S.TitleWithText>
+          <S.MainTitle2>프로젝트소개</S.MainTitle2>
+          <S.Text>
+          SPACE는 미래 지향적인 디자인과 <br />
+          혁신적인 기술을 결합한 디지털 플랫폼입니다.<br />
+          사용자에게 무한한 창의성과 가능성을 제공하며,<br />
+          일상을 새로운 차원으로 연결합니다.
+          </S.Text>
+        </S.TitleWithText>
       </S.Section>
       <S.Star src={Star} x={-1} y={5} />
       <S.Star src={Star} x={35} y={4} />

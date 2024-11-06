@@ -19,3 +19,23 @@ export const Sun = styled.img `
     height: 200vh;
     z-index:2;
 `
+
+export const BackBtn = styled.button `
+    top: 3vh;
+    left: 2vh;
+    position: absolute;
+    background-color: transparent;
+    border: none;
+    outline: none;
+    box-shadow: none;
+    -webkit-user-drag: none;
+    -moz-user-drag: none;
+    -ms-user-drag: none;
+    user-select: none;
+    cursor: pointer;
+
+    img {
+        width: 6vh;
+        height: 6vh;
+    }
+`

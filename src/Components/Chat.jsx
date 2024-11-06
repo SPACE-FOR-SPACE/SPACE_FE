@@ -8,10 +8,11 @@ import Ballon from "./Ballon";
 import ObjectImg from "./ObjectImg";
 import { useState, useRef, useEffect } from "react";
 import CheckList from "./CheckList";
+import BackBtn from "./BackBtn";
 import axios from "axios";
 import { Down, Up, Left, Right } from "../Functions/Move";
 
-export default function Chat({ Obj, size, left, bottom, anime, id, text, map }) {
+export default function Chat({ Obj, size, left, bottom, anime, id, text, map, object }) {
     const navigate = useNavigate();
     const imageSrc = PlanetObj[0][Obj];
     const [input, setInput] = useState("");
@@ -20,6 +21,7 @@ export default function Chat({ Obj, size, left, bottom, anime, id, text, map }) 
     const [array, setArray] = useState([]);
     const [load, setLoad] = useState(false);
     const [Text, setText] = useState([]);
+    const [check, setCheck] = useState([]);
 
     useEffect(() => {
         setText(text)
@@ -54,12 +56,12 @@ export default function Chat({ Obj, size, left, bottom, anime, id, text, map }) 
                             withCredentials: true
                         }
                     );
-
-                    console.log(response.data);
                     setText(prevText => {
                         const updatedText = prevText.filter(item => item.Text !== "⦁ ⦁ ⦁");
                         return [...updatedText, { User: false, Text: response.data.feedback, Type: "B" }];
                     });
+                    setCheck(response.data.score);
+                    console.log(response.data);
                     const moves = response.data.move;
                     for (const direction of moves) {
                         await new Promise(resolve => {
@@ -78,7 +80,6 @@ export default function Chat({ Obj, size, left, bottom, anime, id, text, map }) 
                                         Down(array, setArray);
                                         break;
                                     case '5':
-                                        console.log("행동");
                                         break;
                                     default:
                                         console.warn(`알 수 없는 방향: ${direction}`);
@@ -116,17 +117,14 @@ export default function Chat({ Obj, size, left, bottom, anime, id, text, map }) 
 
     return (
         <Container>
-            <Back onClick={() => navigate(`/`)}>
-                <BackArrow src={back} />
-                <BackText>뒤로가기</BackText>
-            </Back>
-            <Simulator array={array} id={id} />
+            <BackBtn />
+            <Simulator array={array} img={object}/>
             <ChatBg>
                 <Chating ref={chatingRef}>
                     {Text.map((item, index) => (
                         item.Type == "B" ?
                             <Ballon key={index} User={item.User} Num={index} Text={item.Text} /> :
-                            <CheckList key={index} Text={item.Text} />
+                            <CheckList key={index} Text={item.Text} check={check[index-1]}/>
                     ))}
                 </Chating>
                 {

@@ -27,7 +27,7 @@ export default function Login() {
         const { email, password } = input;
 
         try {
-            const response = await axios.post(
+            await axios.post(
                 '/api/login',
                 {
                     email: email,
@@ -40,7 +40,7 @@ export default function Login() {
                     withCredentials: true
                 }
             );
-            console.log('로그인 성공:', response);
+            console.log('로그인 성공');
             navigate(`/`);
 
         } catch (error) {
@@ -48,6 +48,7 @@ export default function Login() {
             console.error('로그인 실패:', error);
         }
     }
+
     return (
         <>
             <GlobalStyles />

@@ -1,21 +1,14 @@
+import { useState, useEffect } from "react";
 import Stage from "./Stage";
 import styled from "styled-components";
-import Player1 from "../assets/Map/Player_boy.svg"
-import Mushroom from "../assets/Map/Object/mushroom.svg"
-import Snake from "../assets/Map/Object/snake.svg"
-import Thorn from "../assets/Map/Object/thorn.svg"
-import Egg from "../assets/Map/Object/egg.svg"
-import Wall from "../assets/Map/Object/wall.svg"
 
-export default function Simulator({array, id}) {
-    const item = {
-        0: Player1,
-        1000: Mushroom,
-        // 2: Egg,
-        3: Wall,
-        // 4: Egg,
-        // 5: Egg,
-    }
+export default function Simulator({array, img}) {
+    const [item, setItem] = useState([]);
+
+    useEffect(() => {
+        setItem(img);
+    }, []);
+    
     return (
         <SimulBg>
             <Map>

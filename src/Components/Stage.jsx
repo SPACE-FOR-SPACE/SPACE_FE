@@ -32,7 +32,7 @@ const Box = styled.div `
 const Point = styled.button `
     width: 4vh;
     aspect-ratio: 1 / 1; 
-    background-color: white;
+    background-color: ${({$bg}) => $bg ? "#30D208" : "white"};
     border: 0.5vh solid ${({$bg}) => $bg ? "#30D208" : "white"};
     border-radius: 100vh;
     cursor: pointer;

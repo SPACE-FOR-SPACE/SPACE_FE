@@ -11,6 +11,7 @@ export default function Plant() {
     const [text, setText] = useState([]);
     const [map, setMap] = useState([]);
     const [loading, setLoading] = useState(true);
+    const [object, setObject] = useState([]);
 
     useEffect(() => {
         setLoading(true);
@@ -31,6 +32,14 @@ export default function Plant() {
                     },
                     withCredentials: true,
                 });
+
+                const response3 = await axios.get(`/api/chapters/1`, {
+                    headers: {
+                        'Content-Type': 'application/json',
+                        'ngrok-skip-browser-warning': 'true',
+                    },
+                    withCredentials: true,
+                });
                 setText([
                     {
                         User: false,
@@ -44,7 +53,10 @@ export default function Plant() {
                     }))
                 ]);
                 setMap(response1.data.map);
-                console.log(response1.data);
+                setObject({
+                    ...response1.data.mapObjectImage,
+                    ...response3.data.mapObjectImage
+                });
                 setLoading(false);
             } catch (error) {
                 console.error('실패:', error);
@@ -63,7 +75,7 @@ export default function Plant() {
                 <>
                     <QuizBg $bg={"plant"} />
                     <Background />
-                    <Chat key={id} Obj={'none'} size={45} left={0} bottom={-2} anime={false} id={id} text={text} map={map} />
+                    <Chat key={id} Obj={'none'} size={45} left={0} bottom={-2} anime={false} id={id} text={text} map={map} object={object}/>
                 </>
             )}
         </>

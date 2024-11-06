@@ -33,7 +33,7 @@ export const IconSvg = styled.img`
 export const RoketImg = styled.img`
     width: 120px;
     height: 120px;
-    top: -50px;
+    top: -55px;
     z-index: 99;
     position:absolute;
     -webkit-user-drag: none;
@@ -53,27 +53,28 @@ export const Title = styled.h2`
 
 export const InputTable = styled.table`
     margin:0 auto;
+    position:relative;
     height:400px;
 `
 
 export const Input = styled.input`
-width: 400px;
-height: 30px;
-box-shadow: none;
-outline: none;
-border: none;
-border-bottom: 3px solid #9D9DAE;
-background-color: transparent;
-color: white;
-font-size: large;
-font-weight:bolder;
-margin-left: 50px;
-text-align: left;
-transition: 0.5s;
+    width: 400px;
+    height: 30px;
+    box-shadow: none;
+    outline: none;
+    border: none;
+    border-bottom: 3px solid #9D9DAE;
+    background-color: transparent;
+    color: white;
+    font-size: large;
+    font-weight:bolder;
+    margin-left: 50px;
+    text-align: left;
+    transition: 0.5s;
 
-&:focus {
-    border-bottom: 3px solid white;
-}
+    &:focus {
+        border-bottom: 3px solid white;
+    }
 `
 
 export const Lname = styled.td`
@@ -108,5 +109,26 @@ export const JoinBtn = styled.button`
 `
 
 export const EmailCheckBtn = styled.button`
-    margin:0 auto;
-`
+    margin: 0 auto;
+    background-color: #090123;
+    color: white;
+    border: 3px solid white;
+    border-radius: 50vh;
+    padding: 10px 20px;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    font-size: 16px;
+    margin: 4px 2px;
+    cursor: pointer;
+    border-radius: 5px;
+`;
+
+export const Passmsg = styled.div`
+    position: absolute;
+    left: 190px;
+    color: rgba(255, 133, 133, 0.35);
+    font-size: 0.8em;
+    margin-top: 5px;
+    font-weight:bolder;
+`;

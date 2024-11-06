@@ -54,8 +54,10 @@ export const Section = styled.section`
     display: flex;
     width: 100vw;
     height: 110vh;
+    /* background-color: aqua; */
+    margin-bottom: 10vh;
 
-    img {
+    .Plant1 {
         top: 10vh;
         position: absolute;
         width: 70vh;
@@ -65,6 +67,20 @@ export const Section = styled.section`
         -moz-user-drag: none;
         -ms-user-drag: none;
         user-select: none;
+    }
+
+    .Plant2 {
+        top: 50%;
+        right: -25%;
+        position: absolute;
+        width: 50%;
+        height: auto;
+        display: block;
+        -webkit-user-drag: none;
+        -moz-user-drag: none;
+        -ms-user-drag: none;
+        user-select: none;
+        transform: translate(-50%, -50%);
     }
 `
 
@@ -80,7 +96,7 @@ export const Light = styled.div`
     z-index: -1;
 `
 
-export const MainTitle = styled.h1`
+export const MainTitle1 = styled.h1`
     position: absolute;
     width: 75vw;
     top: 30vh;
@@ -89,6 +105,36 @@ export const MainTitle = styled.h1`
     color: white;
     font-size: 10vh;
     font-weight: 700;
+    font-family: 'JetBrains Mono';
+`
+
+export const TitleWithText = styled.div`
+    position: relative;
+    width: 50vw;
+    text-align: center;
+    margin: 20px 0;
+`;
+
+export const MainTitle2 = styled.h1`
+    position: absolute;
+    width: auto;
+    top: 20vh;
+    left: 15vh;
+    text-align: center;
+    color: white;
+    font-size: 8vh;
+    font-weight: 700;
+    font-family: 'JetBrains Mono';
+`
+
+export const Text = styled.div `
+    position: absolute;
+    text-align: left;
+    line-height: 6vh;
+    top: 40vh;
+    left: 15vh;
+    color: white;
+    font-size: 3vh;
     font-family: 'JetBrains Mono';
 `
 
@@ -172,9 +218,9 @@ export const Ring = styled.div`
 `
 
 export const Marquee = keyframes`
-    0% { transform: translateX(0%); }
+    0% { transform: translateX(10%); }
     50% { transform: translateX(50%); }
-    100% { transform: translateX(0%); }
+    100% { transform: translateX(10%); }
 `
 
 export const MarqueeStyle = styled.div`
