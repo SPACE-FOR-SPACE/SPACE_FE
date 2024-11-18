@@ -2,12 +2,14 @@ import { useParams } from 'react-router-dom';
 import { useEffect, useState } from 'react';
 import QuizBg from "../QuizBackground.jsx";
 import Chat from '../../../Components/Chat.jsx';
+import Loading from '../../Loading/index.jsx';
 
 export default function Sea() {
     const { id } = useParams();
     const [text, setText] = useState([]);
     const [map, setMap] = useState([]);
     const [loading, setLoading] = useState(true);
+    const [object, setObject] = useState([]);
 
     useEffect(() => {
         setMap([
@@ -19,6 +21,11 @@ export default function Sea() {
             [3, 3, 2, 2, 2, 1000, 3],
             [3, 3, 3, 3, 3, 3, 3],
         ]);
+
+        setObject({
+            0:"https://space-static-images.s3.ap-northeast-2.amazonaws.com/Player_boy.svg",
+            3:"https://space-static-images.s3.ap-northeast-2.amazonaws.com/wall.svg"
+        })
 
         setText([
             {
@@ -43,15 +50,15 @@ export default function Sea() {
             }
         ]);
 
-        setLoading(false); // 로딩 완료 상태
-    }, []); // 빈 배열을 넣어 최초 렌더링 시 한 번만 실행
+        setLoading(false);
+    }, []);
 
-    if (loading) return <div>Loading...</div>; // 로딩 중일 때 표시할 화면
+    if (loading) return <Loading />
 
     return (
         <>
             <QuizBg $bg={"sea"} />
-            <Chat key={id} Obj={'reef'} size={45} left={-2} bottom={-5} anime={false} id={id} text={text} map={map} />
+            <Chat key={id} Obj={'reef'} size={45} left={-2} bottom={-5} anime={false} id={id} text={text} map={map} object={object}/>
         </>
     );
 }

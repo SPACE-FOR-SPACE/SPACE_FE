@@ -7,8 +7,9 @@ import Star from '../../assets/Landing/Star.svg';
 import light from '../../assets/Landing/element/light.svg';
 import dark from '../../assets/Landing/element/dark.svg';
 import { useNavigate } from 'react-router-dom';
+import config from '../../config.js';
 
-export default function LandingPage() {
+export default function LandingPage({setMainLogin}) {
   const [pos, setPos] = useState(1);
   const [login, setLogin] = useState(false);
   const [name, setName] = useState("");
@@ -17,17 +18,18 @@ export default function LandingPage() {
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const response = await axios.get(`/api/check`, {
+        const response = await axios.get(`${config.api}/check`, {
           headers: {
             'Content-Type': 'application/json',
             'ngrok-skip-browser-warning': 'true',
           },
           withCredentials: true,
         });
-        if (response.statusText === "OK") {
-          setLogin(true);
+        console.log(response);
+        if (response.status === 200) {
+          setLogin(true)
         }
-      } catch (error) {
+      } catch (e) {
         setLogin(false);
       }
     };
@@ -37,7 +39,7 @@ export default function LandingPage() {
 
   async function Logout() {
     try {
-      await axios.post('/api/logout', {}, {
+      await axios.post(`${config.api}/logout`, {}, {
         headers: {
           'Content-Type': 'application/json'
         },
@@ -65,8 +67,8 @@ export default function LandingPage() {
       <S.Header>
         <S.Left>
           <S.Title>SPACE</S.Title>
-          <S.Menu active={pos === 1} onClick={() => { setPos(1); scrollToSection(1); }}>메인</S.Menu>
-          <S.Menu active={pos === 2} onClick={() => { setPos(2); scrollToSection(2); }}>프로젝트 소개</S.Menu>
+          <S.Menu active={pos === 1 ? true : false} onClick={() => { setPos(1); scrollToSection(1); }}>메인</S.Menu>
+          <S.Menu active={pos === 2 ? true : false} onClick={() => { setPos(2); scrollToSection(2); }}>프로젝트 소개</S.Menu>
           {/* <S.Menu active={pos === 3} onClick={() => { setPos(3); scrollToSection(3); }}>팀 소개</S.Menu> */}
           {/* <S.Menu active={pos === 4} onClick={() => { setPos(4); scrollToSection(4); }}>커뮤니티</S.Menu> */}
         </S.Left>

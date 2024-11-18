@@ -7,7 +7,6 @@ import { useEffect, useRef, useState } from "react";
 
 export default function Loading() {
     const videoRef = useRef(null);
-    const random = Math.floor(Math.random() * 2) + 1;
     const [loading, setLoading] = useState(true);
 
     useEffect(() => {
@@ -23,10 +22,7 @@ export default function Loading() {
             <GlobalStyles />
             <Container>
                 <Roket ref={videoRef} autoPlay muted loop>
-                    {
-                        random == 1 ? <source src={redRoket} type="video/webm" /> :
-                            <source src={blueRoket} type="video/webm" />
-                    }
+                    <source src={blueRoket} type="video/webm" />
                 </Roket>
                 <Load>
                     <Point t={0} />

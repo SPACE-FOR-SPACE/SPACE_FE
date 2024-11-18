@@ -75,7 +75,7 @@ export default function Plant() {
                 <>
                     <QuizBg $bg={"plant"} />
                     <Background />
-                    <Chat key={id} Obj={'none'} size={45} left={0} bottom={-2} anime={false} id={id} text={text} map={map} object={object}/>
+                    <Chat key={id} Obj={'none'} size={45} left={0} bottom={-2} anime={false} id={id} text={text} map={map} object={object} title={1}/>
                 </>
             )}
         </>

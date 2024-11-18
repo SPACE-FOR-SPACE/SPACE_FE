@@ -4,7 +4,7 @@ export const Center = styled.div`
     margin: 0 auto;
     width: 50%;
     text-align: center;
-    margin-top: 50px;
+    margin-top: 40px;
 `;
 
 
@@ -50,6 +50,25 @@ export const Title = styled.h2`
     text-align:center;
     margin-top:50px;
 `
+
+export const Title2 = styled.h2`
+    color:white;
+    text-align:center;
+    margin-top:80px;
+    margin-bottom:50px;
+`
+
+export const Title3 = styled.h1`
+    color: white;
+    text-align: center;
+    margin-top: auto;
+    margin-bottom: auto;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 80vh;
+`
+
 
 export const InputTable = styled.table`
     margin:0 auto;
@@ -109,19 +128,20 @@ export const JoinBtn = styled.button`
 `
 
 export const EmailCheckBtn = styled.button`
-    margin: 0 auto;
+    width: 100px;
+    height:35px;
     background-color: #090123;
-    color: white;
-    border: 3px solid white;
-    border-radius: 50vh;
-    padding: 10px 20px;
+    color: rgba(249, 167, 35, 0.5);
+    border: 2px solid #F9A723;
     text-align: center;
     text-decoration: none;
     display: inline-block;
-    font-size: 16px;
+    font-size: 15px;
     margin: 4px 2px;
     cursor: pointer;
-    border-radius: 5px;
+    border-radius: 15px;
+    font-family: 'Inter', sans-serif;
+    font-weight: bolder;
 `;
 
 export const Passmsg = styled.div`
@@ -132,3 +152,62 @@ export const Passmsg = styled.div`
     margin-top: 5px;
     font-weight:bolder;
 `;
+
+export const ConsentBox = styled.div`
+    margin: 0 auto;
+    border: 1px solid black;
+    background-color: #D9D9D9;
+    width: 550px;
+    height: 150px;
+    overflow-x: hidden;
+    overflow-y: auto;
+`
+
+export const CheckBox = styled.div`
+    margin: 0 auto;
+    margin-bottom: 10px;
+    width: 550px;
+    height: 30px;
+    display: flex;
+    align-items: center;
+    justify-content: flex-end;
+    font-weight: 600;
+    font-size: 12px;
+    color: #5F5A70;
+    font-family: 'Inter', sans-serif;
+
+    span {
+        margin-right: 0px;
+        display: flex;
+        align-items: center;
+    }
+
+    input[type="checkbox"] {
+        width: 15px;
+        height: 15px;
+        margin-right: 10px;
+        cursor: pointer;
+        display: flex;
+        align-items: center;
+    }
+`
+
+export const Btn = styled.button`
+    top: 30px;
+    left: 25px;
+    position: absolute;
+    background-color: transparent;
+    border: none;
+    outline: none;
+    box-shadow: none;
+    -webkit-user-drag: none;
+    -moz-user-drag: none;
+    -ms-user-drag: none;
+    user-select: none;
+    cursor: pointer;
+
+    img {
+        width: 40px;
+        height: 40px;
+    }
+`

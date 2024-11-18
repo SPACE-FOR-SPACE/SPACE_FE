@@ -2,11 +2,11 @@ import { useNavigate } from "react-router-dom";
 import img from '../assets/etc/BackBtn.svg';
 import styled from "styled-components";
 
-export default function BackBtn() {
+export default function BackBtn({title}) {
     const navigate = useNavigate()
 
     return (
-        <Btn onClick={() => navigate('/main')}>
+        <Btn onClick={() => navigate(`/${title}`)}>
             <img src={img} />
         </Btn>
     )
@@ -14,7 +14,7 @@ export default function BackBtn() {
 
 const Btn = styled.button`
     top: 3vh;
-    left: 2vh;
+    left: 3vh;
     position: absolute;
     background-color: transparent;
     border: none;
@@ -29,5 +29,9 @@ const Btn = styled.button`
     img {
         width: 6vh;
         height: 6vh;
+        -webkit-user-drag: none;
+        -moz-user-drag: none;
+        -ms-user-drag: none;
+        user-select: none;
     }
 `

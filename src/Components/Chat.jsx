@@ -12,7 +12,7 @@ import BackBtn from "./BackBtn";
 import axios from "axios";
 import { Down, Up, Left, Right } from "../Functions/Move";
 
-export default function Chat({ Obj, size, left, bottom, anime, id, text, map, object }) {
+export default function Chat({ Obj, size, left, bottom, anime, id, text, map, object, title }) {
     const navigate = useNavigate();
     const imageSrc = PlanetObj[0][Obj];
     const [input, setInput] = useState("");
@@ -61,7 +61,6 @@ export default function Chat({ Obj, size, left, bottom, anime, id, text, map, ob
                         return [...updatedText, { User: false, Text: response.data.feedback, Type: "B" }];
                     });
                     setCheck(response.data.score);
-                    console.log(response.data);
                     const moves = response.data.move;
                     for (const direction of moves) {
                         await new Promise(resolve => {
@@ -117,7 +116,7 @@ export default function Chat({ Obj, size, left, bottom, anime, id, text, map, ob
 
     return (
         <Container>
-            <BackBtn />
+            <BackBtn title={`stages/${title}`}/>
             <Simulator array={array} img={object}/>
             <ChatBg>
                 <Chating ref={chatingRef}>
@@ -160,9 +159,6 @@ const ChatBg = styled.div`
     align-items: center;
     justify-content: center;
     margin-left: 5%;
-    -webkit-user-drag: none;
-    -moz-user-drag: none;
-    -ms-user-drag: none;
     user-select: none;
     overflow: hidden;
 `

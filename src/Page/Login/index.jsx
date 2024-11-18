@@ -6,9 +6,10 @@ import naver from "../../assets/etc/Login/naver.svg";
 import google from "../../assets/etc/Login/google.svg";
 import kakao from "../../assets/etc/Login/kakao.svg";
 import { useState } from "react";
+import img from '../../assets/etc/BackBtn.svg';
+import config from "../../config";
 
-
-export default function Login() {
+export default function Login() {x  
     const navigate = useNavigate();
     const [input, setInput] = useState({
         email: "",
@@ -28,7 +29,7 @@ export default function Login() {
 
         try {
             await axios.post(
-                '/api/login',
+                `${config.api}/login`,
                 {
                     email: email,
                     password: password
@@ -52,6 +53,9 @@ export default function Login() {
     return (
         <>
             <GlobalStyles />
+            <S.Btn onClick={() => navigate('/')}>
+                <img src={img} />
+            </S.Btn>
             <S.Title>환영해요!</S.Title>
             <S.InputTable>
                 <tbody>
@@ -70,9 +74,15 @@ export default function Login() {
                 </tbody>
             </S.InputTable>
             <S.Center>
-                <S.LoginIcon src={naver} />
-                <S.LoginIcon src={google} />
-                <S.LoginIcon src={kakao} />
+                <a href="/api/oauth2/authorization/naver">
+                    <S.LoginIcon src={naver} />
+                </a>
+                <a href="/api/oauth2/authorization/google">
+                    <S.LoginIcon src={google} />
+                </a>
+                <a href="/api/oauth2/authorization/kakao">
+                    <S.LoginIcon src={kakao} />
+                </a>
             </S.Center>
             <S.Center>
                 <S.LoginBtn onClick={() => Submit()}>로그인</S.LoginBtn>
