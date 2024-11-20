@@ -1,4 +1,6 @@
 import { useState, useEffect } from 'react';
+import axios from 'axios';
+import config from "../../config.js";
 import * as S from './style';
 
 export default function Step2({ setStep, step, setInputs, inputs, setErrorMessages, errorMessages }) {
@@ -13,7 +15,7 @@ export default function Step2({ setStep, step, setInputs, inputs, setErrorMessag
             delete newErrorMessages.confirmPassword;
         }
         setErrorMessages(newErrorMessages);
-    }, [inputs.password, inputs.confirmPassword]); // password 또는 confirmPassword가 변경될 때마다 실행
+    }, [inputs.password, inputs.confirmPassword]);
 
     const NextStep = () => {
         const { username, email, password, confirmPassword } = inputs;
@@ -21,6 +23,7 @@ export default function Step2({ setStep, step, setInputs, inputs, setErrorMessag
             alert("항목을 전부 입력해 주세요.");
         } else if (Object.keys(errorMessages).length === 0) {
             setStep(step + 1);
+            Submit();
         } else {
             console.log(Object.keys(errorMessages).length)
             console.log(errorMessages);
@@ -70,9 +73,26 @@ export default function Step2({ setStep, step, setInputs, inputs, setErrorMessag
         setErrorMessages(newErrorMessages);
     };
 
-    const emailCheck = () => {
+    const emailCheck = async () => {
         if (isEmailValid) {
             setIsEmailSent(true);
+            try {
+                await axios.post(
+                    `${config.api}/mails`,
+                    {
+                        email: inputs.email,
+                    },
+                    {
+                        headers: {
+                            'Content-Type': 'application/json'
+                        },
+                        withCredentials: true
+                    }
+                );
+                console.log('인증메일 전송');
+            } catch (error) {
+                console.error('메일 전송 실패 :', error);
+            }
         } else {
             setErrorMessages(prevErrors => ({
                 ...prevErrors,

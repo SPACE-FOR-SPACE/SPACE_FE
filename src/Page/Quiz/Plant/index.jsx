@@ -5,6 +5,7 @@ import Loading from '../../Loading/index.jsx';
 import QuizBg from "../QuizBackground.jsx";
 import Chat from '../../../Components/Chat.jsx'
 import Background from './Background.jsx';
+import config from '../../../config.js';
 
 export default function Plant() {
     const { id } = useParams();
@@ -17,7 +18,7 @@ export default function Plant() {
         setLoading(true);
         const QuizData = async () => {
             try {
-                const response1 = await axios.get(`/api/quizzes/${id}`, {
+                const response1 = await axios.get(`${config.api}/quizzes/${id}`, {
                     headers: {
                         'Content-Type': 'application/json',
                         'ngrok-skip-browser-warning': 'true',
@@ -25,7 +26,7 @@ export default function Plant() {
                     withCredentials: true,
                 });
 
-                const response2 = await axios.get(`/api/checklists/quiz/${id}`, {
+                const response2 = await axios.get(`${config.api}/checklists/quiz/${id}`, {
                     headers: {
                         'Content-Type': 'application/json',
                         'ngrok-skip-browser-warning': 'true',
@@ -33,7 +34,7 @@ export default function Plant() {
                     withCredentials: true,
                 });
 
-                const response3 = await axios.get(`/api/chapters/1`, {
+                const response3 = await axios.get(`${config.api}/chapters/1`, {
                     headers: {
                         'Content-Type': 'application/json',
                         'ngrok-skip-browser-warning': 'true',

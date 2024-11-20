@@ -11,9 +11,9 @@ import CheckList from "./CheckList";
 import BackBtn from "./BackBtn";
 import axios from "axios";
 import { Down, Up, Left, Right } from "../Functions/Move";
+import config from "../config";
 
 export default function Chat({ Obj, size, left, bottom, anime, id, text, map, object, title }) {
-    const navigate = useNavigate();
     const imageSrc = PlanetObj[0][Obj];
     const [input, setInput] = useState("");
     const chatingRef = useRef(null);
@@ -44,7 +44,7 @@ export default function Chat({ Obj, size, left, bottom, anime, id, text, map, ob
                     setText(prevText => [...prevText, loadingText]);
 
                     const response = await axios.post(
-                        `/api/chats/${id}`,
+                        `${config.api}/chats/${id}`,
                         {
                             userChat: Temp,
                             type: 'CODE'
@@ -62,6 +62,7 @@ export default function Chat({ Obj, size, left, bottom, anime, id, text, map, ob
                     });
                     setCheck(response.data.score);
                     const moves = response.data.move;
+                    console.log(moves);
                     for (const direction of moves) {
                         await new Promise(resolve => {
                             setTimeout(() => {

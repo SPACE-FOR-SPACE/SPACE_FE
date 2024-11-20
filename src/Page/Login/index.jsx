@@ -9,7 +9,7 @@ import { useState } from "react";
 import img from '../../assets/etc/BackBtn.svg';
 import config from "../../config";
 
-export default function Login() {x  
+export default function Login() {
     const navigate = useNavigate();
     const [input, setInput] = useState({
         email: "",

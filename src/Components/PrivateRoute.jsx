@@ -2,6 +2,7 @@ import React, { useEffect, useState } from "react";
 import { Navigate, Outlet } from "react-router-dom";
 import axios from "axios";
 import Loading from "../Page/Loading";
+import config from "../config";
 
 const PrivateRoute = () => {
     const [mainLogin, setMainLogin] = useState(false);
@@ -10,7 +11,7 @@ const PrivateRoute = () => {
     useEffect(() => {
         const fetchData = async () => {
             try {
-                const response = await axios.get(`/api/check`, {
+                const response = await axios.get(`${config.api}/check`, {
                     headers: {
                         'Content-Type': 'application/json',
                         'ngrok-skip-browser-warning': 'true',

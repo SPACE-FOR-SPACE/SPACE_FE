@@ -61,6 +61,7 @@ export default function Join() {
 
         } catch (error) {
             console.error('회원가입 실패:', error);
+            navigate(`/join`);
         }
     };
 

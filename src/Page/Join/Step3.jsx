@@ -7,7 +7,6 @@ export default function Step3({ Submit }) {
 
     useEffect(() => {
         const timer = setTimeout(() => {
-            Submit();
             navigate('/');
         }, 3000);
         

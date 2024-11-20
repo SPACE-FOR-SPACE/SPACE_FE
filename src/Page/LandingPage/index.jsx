@@ -6,6 +6,7 @@ import Plant2 from '../../assets/Landing/Plant2.svg';
 import Star from '../../assets/Landing/Star.svg';
 import light from '../../assets/Landing/element/light.svg';
 import dark from '../../assets/Landing/element/dark.svg';
+import water from '../../assets/Landing/element/water.svg';
 import { useNavigate } from 'react-router-dom';
 import config from '../../config.js';
 
@@ -110,8 +111,12 @@ export default function LandingPage({setMainLogin}) {
       <S.Star src={Star} x={35} y={4} />
       <S.Star src={Star} x={80} y={20} />
       <S.Star src={Star} x={52} y={60} />
+      <S.Star src={Star} x={5} y={130} />
+      <S.Star src={Star} x={90} y={125} />
+      <S.Star src={Star} x={2} y={205} />
       <S.Element src={light} size={10} x={40} y={20} />
       <S.Element src={dark} size={20} x={85} y={60} />
+      <S.Element src={water} size={10} x={30} y={135} />
     </div>
   );
 }
