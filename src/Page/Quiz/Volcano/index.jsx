@@ -1,42 +1,64 @@
 import { useParams } from 'react-router-dom';
+import { useEffect, useState } from 'react';
 
 import Chat from '../../../Components/Chat.jsx'
 import Cloud from './Cloud.jsx'
 import QuizBg from "../QuizBackground.jsx";
+import Loading from '../../Loading/index.jsx';
+import axios from 'axios';
+import config from '../../../config.js';
 
 export default function Volcano() {
     const { id } = useParams();
-    const map = [
-        [3, 3, 3, 3, 3, 3, 3],
-        [3, 0, 2, 2, 3, 3, 3],
-        [3, 3, 2, 2, 3, 3, 3],
-        [3, 3, 2, 2, 3, 3, 3],
-        [3, 3, 2, 2, 2, 2, 3],
-        [3, 3, 2, 2, 2, 1000, 3],
-        [3, 3, 3, 3, 3, 3, 3],
-    ];
-    const text = [
-        {
-            User: false,
-            Text: "별에 착륙 무사히 착륙했어요! 마을로 이동해볼까요?",
-            Type: "B"
-        },
-        {
-            User: false,
-            Text: "용암을 피하여 마을로 이동하기",
-            Type: "C"
-        },
-        {
-            User: false,
-            Text: "마을에서 주민들에게 이동하기",
-            Type: "C"
-        },
-        {
-            User: false,
-            Text: "주민들에게 말을 걸기",
-            Type: "C"
-        },
-    ];
+    const [text, setText] = useState([]);
+    const [map, setMap] = useState([]);
+    const [loading, setLoading] = useState(true);
+
+    useEffect(() => {
+        setLoading(true);
+        const fetchData = async () => {
+            try {
+                const response1 = await axios.get(`${config.api}/quizzes/${id}`, {
+                    headers: {
+                        'Content-Type': 'application/json',
+                        'ngrok-skip-browser-warning': 'true',
+                    },
+                    withCredentials: true,
+                });
+
+                const response2 = await axios.get(`${config.api}/checklists/quiz/${id}`, {
+                    headers: {
+                        'Content-Type': 'application/json',
+                        'ngrok-skip-browser-warning': 'true',
+                    },
+                    withCredentials: true,
+                });
+
+                setMap(response1.data.map);
+                setText([
+                    {
+                        User: false,
+                        Text: response1.data.content,
+                        Type: 'B'
+                    },
+                    ...response2.data.map(item => ({
+                        User: false,
+                        Text: item.content,
+                        Type: 'C'
+                    }))
+                ]);
+                setLoading(false);
+            } catch (error) {
+                console.error('실패:', error);
+                setLoading(false);
+            }
+        };
+
+        fetchData();
+    }, [id]);
+
+    if (loading) return <Loading />;
+
     return (
         <>
             <QuizBg $bg={"volcano"}/>

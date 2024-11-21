@@ -1,16 +1,17 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import styled from 'styled-components';
 import GlobalStyles from '../../BasicBg';
 import list1 from '../../../assets/etc/stage/list1.svg';
 import list2 from '../../../assets/etc/stage/list2.svg';
-import back from '../../../assets/etc/stage/button.svg';
 import { useNavigate, useParams } from 'react-router-dom';
 import BackBtn from '../../../Components/BackBtn';
+import axios from 'axios';
+import config from '../../../config';
 
 export default function Stages() {
+  const [quizzes, setQuizzes] = useState([]);
   const { id } = useParams();
   const navigate = useNavigate();
-  const totalStages = 10;
   const planets = {
     1: "plant",
     2: "sea",
@@ -18,18 +19,38 @@ export default function Stages() {
     4: "electricity",
     5: "poison",
   }
+  
+
+  useEffect(() => {
+    const fetchQuizzes = async () => {
+      try {
+        const response = await axios.get(`${config.api}/chapters/${id}/quizzes`, {
+          headers: {
+            'Content-Type': 'application/json',
+            'ngrok-skip-browser-warning': 'true',
+          },
+          withCredentials: true,
+        });
+        setQuizzes(response.data);
+      } catch (error) {
+        console.error('퀴즈 목록을 불러오는 데 실패했습니다:', error);
+      }
+    };
+
+    fetchQuizzes();
+  }, [id]);
 
   return (
     <StagesWrapper>
       <StagesContainer>
         <GlobalStyles />
         <BackBtn title={"main"}/>
-        {[...Array(totalStages)].map((_, index) => (
-          <StageButton key={index} onClick={() => {console.log(`/${planets[id]}/${index+1}`); navigate(`/${planets[id]}/${index+1}`) }}>
+        {quizzes.map((quiz, index) => (
+          <StageButton key={quiz.id} onClick={() => {console.log(`/${planets[id]}/${quiz.id}`); navigate(`/${planets[id]}/${quiz.id}`) }}>
             <Light />
             <img
               src={list1}
-              alt={`Stage ${index + 1}`}
+              alt={`Stage ${quiz.id}`}
             />
             <span>{index + 1}</span>
           </StageButton>

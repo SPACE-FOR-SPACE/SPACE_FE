@@ -107,6 +107,9 @@ export default function LandingPage({setMainLogin}) {
           </S.Text>
         </S.TitleWithText>
       </S.Section>
+      <S.Section id="section-3">
+        
+      </S.Section>
       <S.Star src={Star} x={-1} y={5} />
       <S.Star src={Star} x={35} y={4} />
       <S.Star src={Star} x={80} y={20} />

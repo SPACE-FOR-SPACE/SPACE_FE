@@ -3,6 +3,8 @@ import { useEffect, useState } from 'react';
 import QuizBg from "../QuizBackground.jsx";
 import Chat from '../../../Components/Chat.jsx';
 import Loading from '../../Loading/index.jsx';
+import axios from 'axios';
+import config from '../../../config.js';
 
 export default function Sea() {
     const { id } = useParams();
@@ -12,53 +14,66 @@ export default function Sea() {
     const [object, setObject] = useState([]);
 
     useEffect(() => {
-        setMap([
-            [3, 3, 3, 3, 3, 3, 3],
-            [3, 0, 2, 2, 3, 3, 3],
-            [3, 3, 2, 2, 3, 3, 3],
-            [3, 3, 2, 2, 3, 3, 3],
-            [3, 3, 2, 2, 2, 2, 3],
-            [3, 3, 2, 2, 2, 1000, 3],
-            [3, 3, 3, 3, 3, 3, 3],
-        ]);
+        setLoading(true);
+        const fetchData = async () => {
+            try {
+                const response1 = await axios.get(`${config.api}/quizzes/${id}`, {
+                    headers: {
+                        'Content-Type': 'application/json',
+                        'ngrok-skip-browser-warning': 'true',
+                    },
+                    withCredentials: true,
+                });
 
-        setObject({
-            0:"https://space-static-images.s3.ap-northeast-2.amazonaws.com/Player_boy.svg",
-            3:"https://space-static-images.s3.ap-northeast-2.amazonaws.com/wall.svg"
-        })
+                const response2 = await axios.get(`${config.api}/checklists/quiz/${id}`, {
+                    headers: {
+                        'Content-Type': 'application/json',
+                        'ngrok-skip-browser-warning': 'true',
+                    },
+                    withCredentials: true,
+                });
 
-        setText([
-            {
-                User: false,
-                Text: "잠수함을 타고 바닷속 탐험을 시작해요.잠수함을 작동시킵시다.",
-                Type: 'B'
-            },
-            {
-                User: false,
-                Text: "잠수함으로 이동하기",
-                Type: 'C'
-            },
-            {
-                User: false,
-                Text: "잠수함 작동시키기",
-                Type: 'C'
-            },
-            {
-                User: false,
-                Text: "탐험 시작하기",
-                Type: 'C'
+                const response3 = await axios.get(`${config.api}/chapters/2`, {
+                    headers: {
+                        'Content-Type': 'application/json',
+                        'ngrok-skip-browser-warning': 'true',
+                    },
+                    withCredentials: true,
+                });
+
+                setMap(response1.data.map);
+                setObject({
+                    ...response1.data.mapObjectImage,
+                    ...response3.data.mapObjectImage
+                });
+                setText([
+                    {
+                        User: false,
+                        Text: response1.data.content,
+                        Type: 'B'
+                    },
+                    ...response2.data.map(item => ({
+                        User: false,
+                        Text: item.content,
+                        Type: 'C'
+                    }))
+                ]);
+                setLoading(false);
+            } catch (error) {
+                console.error('실패:', error);
+                setLoading(false);
             }
-        ]);
+        };
 
-        setLoading(false);
-    }, []);
+        fetchData();
+    }, [id]);
 
     if (loading) return <Loading />
 
     return (
         <>
             <QuizBg $bg={"sea"} />
-            <Chat key={id} Obj={'reef'} size={45} left={-2} bottom={-5} anime={false} id={id} text={text} map={map} object={object}/>
+            <Chat key={id} Obj={'reef'} size={45} left={-2} bottom={-5} anime={false} id={id} text={text} map={map} object={object} title={2}/>
         </>
     );
 }
