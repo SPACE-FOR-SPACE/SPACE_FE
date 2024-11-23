@@ -11,7 +11,7 @@ export const Ring = styled.div`
     transform: rotate(-15deg);
     z-index:1;
 `
-export const Sun = styled.img `
+export const Sun = styled.img`
     position: absolute;
     top:-120vh;
     right: -100vh;
@@ -19,3 +19,4 @@ export const Sun = styled.img `
     height: 200vh;
     z-index:2;
 `
+

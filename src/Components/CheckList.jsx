@@ -1,17 +1,10 @@
-import { useState } from "react";
 import styled from "styled-components";
 
-export default function CheckList({ Text }) {
-    const [checked, setChecked] = useState(false);
-
-    const toggleCheck = () => {
-        setChecked(!checked);
-    };
-
+export default function CheckList({ Text, check }) {
     return (
         <Container>
             <Box>
-                <Check onClick={toggleCheck} checked={checked} />
+                <CheckMark>{check === 1 ? "✔" : null}</CheckMark>
                 <TextBox>{Text}</TextBox>
             </Box>
         </Container>
@@ -38,15 +31,19 @@ const Box = styled.div`
     align-items: center;
 `;
 
-const Check = styled.div`
+const CheckMark = styled.div`
     width: 4vh;
     height: 4vh;
     aspect-ratio: 1 / 1; 
-    background-color: ${({ checked }) => (checked ? "#30D208" : "#D9D9D9")};
+    background-color: #D9D9D9;
     border-radius: 1vh;
     margin: 1.5vh;
     margin-right: 0.5vh;
-    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 5vh;
+    color: #30d208;
 `;
 
 const TextBox = styled.div`

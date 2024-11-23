@@ -131,3 +131,23 @@ export const SText = styled.span `
     text-align: center;
     cursor: default;
 `
+
+export const Btn = styled.button`
+    top: 30px;
+    left: 25px;
+    position: absolute;
+    background-color: transparent;
+    border: none;
+    outline: none;
+    box-shadow: none;
+    -webkit-user-drag: none;
+    -moz-user-drag: none;
+    -ms-user-drag: none;
+    user-select: none;
+    cursor: pointer;
+
+    img {
+        width: 40px;
+        height: 40px;
+    }
+`

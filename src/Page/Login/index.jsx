@@ -6,8 +6,8 @@ import naver from "../../assets/etc/Login/naver.svg";
 import google from "../../assets/etc/Login/google.svg";
 import kakao from "../../assets/etc/Login/kakao.svg";
 import { useState } from "react";
-
-const API_URL = "https://port-0-space-server-m1oxeihpad978327.sel4.cloudtype.app";
+import img from '../../assets/etc/BackBtn.svg';
+import config from "../../config";
 
 export default function Login() {
     const navigate = useNavigate();
@@ -28,8 +28,8 @@ export default function Login() {
         const { email, password } = input;
 
         try {
-            const response = await axios.post(
-                API_URL+'/login',
+            await axios.post(
+                `${config.api}/login`,
                 {
                     email: email,
                     password: password
@@ -41,7 +41,7 @@ export default function Login() {
                     withCredentials: true
                 }
             );
-            console.log('로그인 성공:', response);
+            console.log('로그인 성공');
             navigate(`/`);
 
         } catch (error) {
@@ -49,9 +49,13 @@ export default function Login() {
             console.error('로그인 실패:', error);
         }
     }
+
     return (
         <>
             <GlobalStyles />
+            <S.Btn onClick={() => navigate('/')}>
+                <img src={img} />
+            </S.Btn>
             <S.Title>환영해요!</S.Title>
             <S.InputTable>
                 <tbody>
@@ -70,9 +74,15 @@ export default function Login() {
                 </tbody>
             </S.InputTable>
             <S.Center>
-                <S.LoginIcon src={naver} />
-                <S.LoginIcon src={google} />
-                <S.LoginIcon src={kakao} />
+                <a href="/api/oauth2/authorization/naver">
+                    <S.LoginIcon src={naver} />
+                </a>
+                <a href="/api/oauth2/authorization/google">
+                    <S.LoginIcon src={google} />
+                </a>
+                <a href="/api/oauth2/authorization/kakao">
+                    <S.LoginIcon src={kakao} />
+                </a>
             </S.Center>
             <S.Center>
                 <S.LoginBtn onClick={() => Submit()}>로그인</S.LoginBtn>

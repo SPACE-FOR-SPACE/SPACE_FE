@@ -1,20 +1,16 @@
+import { useState, useEffect } from "react";
 import Stage from "./Stage";
 import styled from "styled-components";
-import Player1 from "../assets/Map/Player_boy.svg"
-import Mushroom from "../assets/Map/Object/mushroom.svg"
-import Snake from "../assets/Map/Object/snake.svg"
-import Thorn from "../assets/Map/Object/thorn.svg"
 
-export default function Simulator({array, id}) {
-    const item = {
-        0: Player1,
-        1: [Mushroom, Snake, Thorn],
-        2: "길",
-        3: "벽",
-        4: "지",
-        5: "행",
-    }
+export default function Simulator({array, img}) {
+    const [item, setItem] = useState([]);
 
+    useEffect(() => {
+        setItem(img);
+        console.log(img);
+        console.log(array);
+    }, []);
+    
     return (
         <SimulBg>
             <Map>
@@ -22,7 +18,7 @@ export default function Simulator({array, id}) {
                     {array.map((row, rowIndex) => (
                         <tr key={rowIndex}>
                             {row.map((cell, cellIndex) => (
-                                <Piece key={cellIndex} img={cell == 1 ? item[cell][id-1] : item[cell]}></Piece>
+                                <Piece key={cellIndex} img={item[cell]}>{cell}</Piece>
                             ))}
                         </tr>
                     ))}
@@ -67,7 +63,7 @@ const Piece = styled.td`
     aspect-ratio: 1 / 1;
     border: 0.5vh solid rgba(0, 0, 0, 0.5);
     background-image: ${({ img }) => `url(${img})`};
-    background-size: contain;
+    background-size: cover;
     background-position: center;
     background-repeat: no-repeat;
 `

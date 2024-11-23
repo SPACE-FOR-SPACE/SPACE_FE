@@ -8,67 +8,103 @@ import Ballon from "./Ballon";
 import ObjectImg from "./ObjectImg";
 import { useState, useRef, useEffect } from "react";
 import CheckList from "./CheckList";
+import BackBtn from "./BackBtn";
+import axios from "axios";
 import { Down, Up, Left, Right } from "../Functions/Move";
+import config from "../config";
 
-export default function Chat({ Obj, size, left, bottom, anime, id, text }) {
-    const navigate = useNavigate();
+export default function Chat({ Obj, size, left, bottom, anime, id, text, map, object, title }) {
     const imageSrc = PlanetObj[0][Obj];
     const [input, setInput] = useState("");
     const chatingRef = useRef(null);
     const inputRef = useRef(null);
-    const [array, setArray] = useState([
-        [2, 2, 2, 2, 2, 2, 2],
-        [2, 0, 2, 2, 2, 2, 2],
-        [2, 2, 2, 2, 2, 2, 2],
-        [2, 2, 2, 2, 2, 1, 2],
-        [2, 2, 2, 2, 2, 2, 2],
-        [2, 2, 2, 2, 2, 2, 2],
-        [2, 2, 2, 2, 2, 2, 2]
-    ]
-    );
+    const [array, setArray] = useState([]);
+    const [load, setLoad] = useState(false);
+    const [Text, setText] = useState([]);
+    const [check, setCheck] = useState([]);
 
-    const [Text, SetText] = useState(text);
+    useEffect(() => {
+        setText(text)
+        setArray(map);
+    }, []);
 
     const TextInput = () => {
         if (input.trim()) {
-            const updatedText = [...Text];
-            updatedText[id - 1] = [...updatedText[id - 1], { User: true, Text: input, Type: "B" }];
-            SetText(updatedText);
-            let Temp = input;
-            setInput("");
-            inputRef.current.focus();
+            const Chating = async () => {
+                try {
+                    const newText = [...Text, { User: true, Text: input, Type: "B" }];
+                    setText(newText);
+                    const Temp = input;
+                    setInput("");
+                    inputRef.current.focus();
 
-            setTimeout(() => {
-                const directionMatch = Temp.match(/(위쪽|아래쪽|오른쪽|왼쪽)\s*(\d*)/g);
-                if (directionMatch) {
-                    let totalDelay = 0;
+                    setLoad(true);
 
-                    directionMatch.forEach((match) => {
-                        const parts = match.match(/(위쪽|아래쪽|오른쪽|왼쪽)\s*(\d*)/);
-                        const direction = parts[1];
-                        const steps = parseInt(parts[2], 10) || 1;
+                    const loadingText = { User: false, Text: "⦁ ⦁ ⦁", Type: "B" };
+                    setText(prevText => [...prevText, loadingText]);
 
-                        setTimeout(() => {
-                            if (direction === "위쪽")
-                                Up(array, setArray, steps);
-                            else if (direction === "아래쪽")
-                                Down(array, setArray, steps);
-                            else if (direction === "오른쪽")
-                                Right(array, setArray, steps);
-                            else if (direction === "왼쪽")
-                                Left(array, setArray, steps);
-                        }, totalDelay);
+                    const response = await axios.post(
+                        `${config.api}/chats/${id}`,
+                        {
+                            userChat: Temp,
+                            type: 'CODE'
+                        },
+                        {
+                            headers: {
+                                'Content-Type': 'application/json'
+                            },
+                            withCredentials: true
+                        }
+                    );
+                    setText(prevText => {
+                        const updatedText = prevText.filter(item => item.Text !== "⦁ ⦁ ⦁");
+                        return [...updatedText, { User: false, Text: response.data.feedback, Type: "B" }];
+                    });
+                    setCheck(response.data.score);
+                    const moves = response.data.move;
+                    console.log(moves);
+                    for (const direction of moves) {
+                        await new Promise(resolve => {
+                            setTimeout(() => {
+                                switch (direction) {
+                                    case 'r':
+                                        Right(array, setArray);
+                                        break;
+                                    case 'l':
+                                        Left(array, setArray);
+                                        break;
+                                    case 'u':
+                                        Up(array, setArray);
+                                        break;
+                                    case 'd':
+                                        Down(array, setArray);
+                                        break;
+                                    case '5':
+                                        break;
+                                    default:
+                                        console.warn(`알 수 없는 방향: ${direction}`);
+                                }
+                                resolve();
+                            }, 500);
+                        });
+                    }
 
-                        totalDelay += steps * 500;
+                } catch (error) {
+                    console.error('실패', error);
+                    console.error('에러 응답:', error.response);
+                    setText(prevText => {
+                        const updatedText = prevText.filter(item => item.Text !== "⦁ ⦁ ⦁");
+                        return [...updatedText, { User: false, Text: "죄송합니다. 오류가 발생했습니다.", Type: "B" }];
                     });
                 }
-            }, 500);
-
+                setLoad(false);
+            };
+            Chating();
         }
     };
 
     const InputEnter = (e) => {
-        if (e.key === "Enter") {
+        if (e.key === "Enter" && !load) {
             TextInput();
         }
     };
@@ -81,17 +117,14 @@ export default function Chat({ Obj, size, left, bottom, anime, id, text }) {
 
     return (
         <Container>
-            <Back onClick={() => navigate(`/`)}>
-                <BackArrow src={back} />
-                <BackText>뒤로가기</BackText>
-            </Back>
-            <Simulator array={array} id={id} />
+            <BackBtn title={`stages/${title}`}/>
+            <Simulator array={array} img={object}/>
             <ChatBg>
                 <Chating ref={chatingRef}>
-                    {Text[id - 1].map((item, index) => (
+                    {Text.map((item, index) => (
                         item.Type == "B" ?
                             <Ballon key={index} User={item.User} Num={index} Text={item.Text} /> :
-                            <CheckList key={index} Text={item.Text} />
+                            <CheckList key={index} Text={item.Text} check={check[index-1]}/>
                     ))}
                 </Chating>
                 {
@@ -99,7 +132,7 @@ export default function Chat({ Obj, size, left, bottom, anime, id, text }) {
                 }
                 <InputBox>
                     <Input ref={inputRef} value={input} onChange={(e) => setInput(e.target.value)} onKeyDown={InputEnter} />
-                    <InputBtn onClick={() => TextInput()}>
+                    <InputBtn onClick={() => TextInput()} disabled={load}>
                         <Arrow src={arrow} alt="send" />
                     </InputBtn>
                 </InputBox>
@@ -127,9 +160,6 @@ const ChatBg = styled.div`
     align-items: center;
     justify-content: center;
     margin-left: 5%;
-    -webkit-user-drag: none;
-    -moz-user-drag: none;
-    -ms-user-drag: none;
     user-select: none;
     overflow: hidden;
 `

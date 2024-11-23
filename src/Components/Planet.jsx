@@ -4,20 +4,16 @@ import { useNavigate } from "react-router-dom";
 
 export default function Planet({ src, size, x1, y1, x2, y2, panime, color, size2, title, lock }) {
     const navigate = useNavigate();
-    const planets = {
-        1: "sea",
-        2: "volcano",
-        3: "plant",
-        4: "electricity",
-        5: "poison",
-    }
     const LockXY = {
+        1: [11, 8],
+        2: [9, 10],
+        3: [6, 10],
         4: [12, 10],
         5: [11, 8],
     }
 
     return (
-        <Container size={size} x1={x1} y1={y1} panime={panime} onClick={() => {lock ? navigate(`/inventory`) : navigate(`/${planets[title]}/1`)}}>
+        <Container size={size} x1={x1} y1={y1} panime={panime} onClick={() => {lock ? alert("스테이지가 잠겨있습니다!") : navigate(`/stages/${title}`)}}>
             <PlanetMain src={src} size={size} />
             {lock ? <Lock src={LockImg} alt="lock" x={LockXY[title][0]} y={LockXY[title][1]}/> : 
             <Light size={size} color={color} x2={x2} y2={y2} size2={size2} />}
@@ -45,6 +41,7 @@ const Pkeyframe2 = keyframes`
 
 const Container = styled.div`
     position: absolute;
+    cursor: pointer;
     width: ${({ size }) => `${size}vh`};
     height: ${({ size }) => `${size}vh`};
     top: ${({ y1 }) => `${y1}vh`};
