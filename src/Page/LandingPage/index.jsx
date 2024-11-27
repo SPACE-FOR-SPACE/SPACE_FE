@@ -19,7 +19,7 @@ export default function LandingPage({setMainLogin}) {
   useEffect(() => {
     const fetchData = async () => {
       try {
-        console.log(import.meta.env);
+        console.log(process.env);
 
         const response = await axios.get(`${config.api}/check`, {
           headers: {
