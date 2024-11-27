@@ -31,6 +31,7 @@ export default function Stages() {
     5: "poison",
   }
 
+  const [hoveredIndex, setHoveredIndex] = useState(null);
 
   // useEffect(() => {
   //   const fetchQuizzes = async () => {
@@ -57,15 +58,27 @@ export default function Stages() {
         <GlobalStyles />
         <BackBtn title={"main"} />
         {quizzes.map((quiz, index) => (
-          <StageButton key={quiz.id} onClick={() => { console.log(`/${planets[id]}/${quiz.id + 10 * (id - 1)}`); navigate(`/${planets[id]}/${quiz.id + 10 * (id - 1)}`) }}>
+          <StageButton
+            key={quiz.id}
+            onMouseEnter={() => setHoveredIndex(index)}
+            onMouseLeave={() => setHoveredIndex(null)}
+            onClick={() => {
+              console.log(`/${planets[id]}/${quiz.id + 10 * (id - 1)}`);
+              navigate(`/${planets[id]}/${quiz.id + 10 * (id - 1)}`);
+            }}
+          >
             <Light />
+            <img
+              src={hoveredIndex === index ? list2 : list1}
+              alt={`Stage ${quiz.id + 10 * (id - 1)}`}
+            />
             <span>{index + 1}</span>
           </StageButton>
         ))}
       </StagesContainer>
     </StagesWrapper>
   );
-};
+}
 
 const StagesWrapper = styled.div`
   display: flex;
@@ -90,17 +103,20 @@ const StageButton = styled.button`
   background: none;
   border: none;
   cursor: pointer;
-  width: 20vh;
-  height: 20vh;
-  
-  /* 기본 배경 이미지 */
-  background-image: url(${list1});
-  background-size: cover;
-  background-position: center;
-  
-  /* 호버 시 배경 이미지 변경 */
-  &:hover {
-    background-image: url(${list2});
+  width: 20vh; 
+  height: 20vh; 
+
+  img {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 20vh;
+    height: auto;
+    -webkit-user-drag: none;
+    -moz-user-drag: none;
+    -ms-user-drag: none;
+    user-select: none;
+    z-index: 2;
   }
 
   span {
@@ -111,7 +127,7 @@ const StageButton = styled.button`
     color: white;
     font-weight: bold;
     font-size: 7vh;
-    z-index: 2; /* 텍스트가 이미지 위에 오도록 */
+    z-index: 3;
     pointer-events: none;
   }
 `;
