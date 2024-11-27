@@ -27,8 +27,8 @@ const Btn = styled.button`
     cursor: pointer;
 
     img {
-        width: 6vh;
-        height: 6vh;
+        width: 5vh;
+        height: 5vh;
         -webkit-user-drag: none;
         -moz-user-drag: none;
         -ms-user-drag: none;

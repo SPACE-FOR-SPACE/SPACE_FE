@@ -1,14 +1,19 @@
 import { BrowserRouter, Route, Routes } from 'react-router-dom';
 import { Suspense, lazy } from 'react';
 import './App.css';
+import PrivateRoute from './Components/PrivateRoute';
 import Join from './Page/Join';
 import Main from './Page/Main';
 import Login from './Page/Login';
 import Loading from './Page/Loading';
 import ErrorBoundary from './Components/ErrorBoundary';
 import Stages from './Page/Quiz/Stages';
-
-import PrivateRoute from './Components/PrivateRoute';
+import ProblemDetail from './Page/Admin/ProblemDetail';
+import ClassRoom from './Page/Admin/ClassRoom';
+import Store from './Page/Admin/Store';
+import Question from './Page/Admin/Question';
+import ClassDetail from './Page/Admin/ClassDetail';
+import Incorrect from './Page/Admin/Incorrect';
 
 const Sea = lazy(() => import('./Page/Quiz/Sea'));
 const Volcano = lazy(() => import('./Page/Quiz/Volcano'));
@@ -30,6 +35,12 @@ const App = () => {
             <Route path="/plant/:id" element={<Plant />} />
             <Route path="/loading" element={<Loading />} />
             <Route path="/stages/:id" element={<Stages />} />
+            <Route path="/admin/problem" element={<ProblemDetail />} />
+            <Route path="/admin/class" element={<ClassRoom />} />
+            <Route path="/admin/class/:id" element={<ClassDetail />} />
+            <Route path="/admin/store" element={<Store />} />
+            <Route path="/admin/question" element={<Question />} />
+            <Route path="/admin/incorrect" element={<Incorrect />} />
           </Route>
         </Routes>
       </Suspense>

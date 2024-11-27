@@ -18,7 +18,8 @@ export default function Join() {
         username: "",
         email: "",
         password: "",
-        confirmPassword: ""
+        confirmPassword: "",
+        age: ""
     });
     const [errorMessages, setErrorMessages] = useState({
         username: "",
@@ -27,18 +28,8 @@ export default function Join() {
         confirmPassword: ""
     });
 
-    const stepProps = {
-        step,
-        setStep,
-        inputs,
-        setInputs,
-        errorMessages,
-        setErrorMessages
-    };
-
-
     const Submit = async () => {
-        const { username, email, password } = inputs;
+        const { username, email, password, age } = inputs;
 
         try {
             await axios.post(
@@ -47,7 +38,7 @@ export default function Join() {
                     email: email,
                     username: username,
                     password: password,
-                    age: 13
+                    age: age,
                 },
                 {
                     headers: {
@@ -57,12 +48,23 @@ export default function Join() {
                 }
             );
             console.log('회원가입 성공');
-            navigate(`/login`);
-
+            setTimeout(() => {
+                navigate('/login');
+            }, 3000);
         } catch (error) {
             console.error('회원가입 실패:', error);
-            navigate(`/join`);
+            alert("회원가입 실패");
+            setStep(2);
         }
+    };
+
+    const stepProps = {
+        step,
+        setStep,
+        inputs,
+        setInputs,
+        errorMessages,
+        setErrorMessages
     };
 
     return (
@@ -87,7 +89,7 @@ export default function Join() {
                     step === 1 ?
                         <Step1 setStep={setStep} step={step} /> : step === 2 ?
                             <Step2 {...stepProps} /> :
-                            <Step3 Submit={Submit} />
+                            <Step3 Submit={Submit}/>
                 }
 
             </S.Center>

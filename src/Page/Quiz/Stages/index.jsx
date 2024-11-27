@@ -9,7 +9,18 @@ import axios from 'axios';
 import config from '../../../config';
 
 export default function Stages() {
-  const [quizzes, setQuizzes] = useState([]);
+  const [quizzes, setQuizzes] = useState([
+    { id: 1 },
+    { id: 2 },
+    { id: 3 },
+    { id: 4 },
+    { id: 5 },
+    { id: 6 },
+    { id: 7 },
+    { id: 8 },
+    { id: 9 },
+    { id: 10 },
+  ]);
   const { id } = useParams();
   const navigate = useNavigate();
   const planets = {
@@ -19,38 +30,38 @@ export default function Stages() {
     4: "electricity",
     5: "poison",
   }
-  
 
-  useEffect(() => {
-    const fetchQuizzes = async () => {
-      try {
-        const response = await axios.get(`${config.api}/chapters/${id}/quizzes`, {
-          headers: {
-            'Content-Type': 'application/json',
-            'ngrok-skip-browser-warning': 'true',
-          },
-          withCredentials: true,
-        });
-        setQuizzes(response.data);
-      } catch (error) {
-        console.error('퀴즈 목록을 불러오는 데 실패했습니다:', error);
-      }
-    };
 
-    fetchQuizzes();
-  }, [id]);
+  // useEffect(() => {
+  //   const fetchQuizzes = async () => {
+  //     try {
+  //       const response = await axios.get(`${config.api}/chapters/${id}/quizzes`, {
+  //         headers: {
+  //           'Content-Type': 'application/json',
+  //           'ngrok-skip-browser-warning': 'true',
+  //         },
+  //         withCredentials: true,
+  //       });
+  //       setQuizzes(response.data);
+  //     } catch (error) {
+  //       console.error('퀴즈 목록을 불러오는 데 실패했습니다:', error);
+  //     }
+  //   };
+
+  //   fetchQuizzes();
+  // }, [id]);
 
   return (
     <StagesWrapper>
       <StagesContainer>
         <GlobalStyles />
-        <BackBtn title={"main"}/>
+        <BackBtn title={"main"} />
         {quizzes.map((quiz, index) => (
-          <StageButton key={quiz.id} onClick={() => {console.log(`/${planets[id]}/${quiz.id}`); navigate(`/${planets[id]}/${quiz.id}`) }}>
+          <StageButton key={quiz.id} onClick={() => { console.log(`/${planets[id]}/${quiz.id + 10 * (id - 1)}`); navigate(`/${planets[id]}/${quiz.id + 10 * (id - 1)}`) }}>
             <Light />
             <img
               src={list1}
-              alt={`Stage ${quiz.id}`}
+              alt={`Stage ${quiz.id + 10 * (id - 1)}`}
             />
             <span>{index + 1}</span>
           </StageButton>
@@ -97,6 +108,11 @@ const StageButton = styled.button`
     -ms-user-drag: none;
     user-select: none;
     z-index: 2;
+    content: url(${list1}); /* 기본 이미지 */
+
+    &:hover {
+      content: url(${list2}); /* 호버 시 이미지 */
+    }
   }
 
   span {
@@ -108,6 +124,7 @@ const StageButton = styled.button`
     font-weight: bold;
     font-size: 7vh;
     z-index: 3;
+    pointer-events: none;
   }
 `;
 
@@ -118,7 +135,7 @@ const Light = styled.div`
   width: 20vh;
   height: 20vh;
   border-radius: 50%;
-  background-color: rgba(255, 255, 255, 0.5);
+  background-color: rgba(255, 234, 0, 0.862);
   filter: blur(5vh);
   opacity: 0;
   transition: opacity 0.3s ease;

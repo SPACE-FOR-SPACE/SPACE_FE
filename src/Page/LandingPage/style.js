@@ -15,6 +15,19 @@ export const Header = styled.header`
     z-index: 99;
 `
 
+export const RingBox = styled.div `
+    position: absolute;
+    width: 200vh;
+    height: 200vh;
+    overflow: hidden;
+`
+
+export const Snap = styled.div `
+    scroll-snap-type: y mandatory;
+    overflow-y: auto;
+    overflow-x: hidden;
+`
+
 export const Left = styled.div`
     display: flex;
     margin-left: 5vh;
@@ -54,8 +67,8 @@ export const Section = styled.section`
     display: flex;
     width: 100vw;
     height: 110vh;
-    /* background-color: aqua; */
-    margin-bottom: 10vh;
+    margin-bottom: 25vh;
+    scroll-snap-align: start;
 
     .Plant1 {
         top: 10vh;
@@ -118,8 +131,8 @@ export const TitleWithText = styled.div`
 export const MainTitle2 = styled.h1`
     position: absolute;
     width: auto;
-    top: 20vh;
-    left: 15vh;
+    top: 22vh;
+    left: 30vh;
     text-align: center;
     color: white;
     font-size: 8vh;
@@ -131,8 +144,8 @@ export const Text = styled.div `
     position: absolute;
     text-align: left;
     line-height: 6vh;
-    top: 40vh;
-    left: 15vh;
+    top: 42vh;
+    left: 30vh;
     color: white;
     font-size: 3vh;
     font-family: 'JetBrains Mono';
@@ -191,14 +204,29 @@ export const Element = styled.img`
     user-select: none;
 `
 
+export const Roket = styled.img`
+    position: absolute;
+    display: block;
+    width: ${({ size }) => `${size}vh`};
+    height: auto;
+    top: ${({ y }) => `${y}vh`};
+    left:${({ x }) => `${x}vw`};
+    transform: rotate(-35deg);
+    object-fit: cover;
+    -webkit-user-drag: none;
+    -moz-user-drag: none;
+    -ms-user-drag: none;
+    user-select: none;
+`
+
 export const Body = createGlobalStyle`
     body {
         width: 100%;
-        height: 600vh;
+        height: 450vh;
         margin:0;
         overflow-x: hidden;
-        background-image: linear-gradient(#090220 0%, #09104C 41%, #05071C 60%);
-        background-repeat: no-repeat;
+        background-image: linear-gradient(#090220 0%, #09104C 45%, #05071C 75%);
+        background-repeat: repeat;
         background-size: cover;
         background-attachment: scroll;
     }
@@ -228,3 +256,39 @@ export const MarqueeStyle = styled.div`
     white-space: nowrap;
     animation: ${Marquee} 1.5s linear infinite;
 `
+
+export const Sun = styled.img `
+    position: absolute;
+    width: 100%;
+    height: auto;
+    top: 400vh;
+`
+
+export const ImgBox = styled.div `
+    width: 100%;
+    background-color: aqua;
+`
+
+export const Container = styled.div`
+  display: flex;
+  flex-direction: column; 
+  align-items: center;
+  justify-content: center; 
+  width: 100%;
+  height: 100vh;
+`;
+
+export const Logo = styled.img`
+  width: 60vh;
+  height: auto;
+  margin-bottom: 20px;
+`;
+
+export const MemberBox = styled.div`
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-evenly;
+  gap: 10px;
+  height: 40vh;
+  overflow-y: auto;
+`;

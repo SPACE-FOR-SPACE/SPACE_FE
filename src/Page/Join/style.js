@@ -58,15 +58,12 @@ export const Title2 = styled.h2`
     margin-bottom:50px;
 `
 
-export const Title3 = styled.h1`
-    color: white;
-    text-align: center;
-    margin-top: auto;
-    margin-bottom: auto;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    height: 80vh;
+export const Title3 = styled.h2`
+    color:white;
+    font-size: 30px;
+    text-align:center;
+    margin-top:80px;
+    margin-bottom:0px;
 `
 
 

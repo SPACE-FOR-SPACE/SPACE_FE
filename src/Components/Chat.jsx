@@ -1,8 +1,6 @@
 import styled from "styled-components";
 import arrow from "../assets/etc/arrow.svg"
-import back from "../assets/etc/Back.svg"
 import { PlanetObj } from "./Object";
-import { useNavigate } from "react-router-dom";
 import Simulator from "./Simulator";
 import Ballon from "./Ballon";
 import ObjectImg from "./ObjectImg";
@@ -10,7 +8,7 @@ import { useState, useRef, useEffect } from "react";
 import CheckList from "./CheckList";
 import BackBtn from "./BackBtn";
 import axios from "axios";
-import { Down, Up, Left, Right } from "../Functions/Move";
+import { move } from "../Functions/Move";
 import config from "../config";
 
 export default function Chat({ Obj, size, left, bottom, anime, id, text, map, object, title }) {
@@ -22,10 +20,54 @@ export default function Chat({ Obj, size, left, bottom, anime, id, text, map, ob
     const [load, setLoad] = useState(false);
     const [Text, setText] = useState([]);
     const [check, setCheck] = useState([]);
+    const [temp, setTemp] = useState(2);
+
+    useEffect(() => {
+        const handleKeyDown = (e) => {
+            if (e.key === "ArrowUp") move(array, setArray, 'up', temp, setTemp);
+            if (e.key === "ArrowDown") move(array, setArray, 'down', temp, setTemp);
+            if (e.key === "ArrowLeft") move(array, setArray, 'left', temp, setTemp);
+            if (e.key === "ArrowRight") move(array, setArray, 'right', temp, setTemp);
+        };
+
+        window.addEventListener("keydown", handleKeyDown);
+        return () => {
+            window.removeEventListener("keydown", handleKeyDown);
+        };
+    }, [array]);
 
     useEffect(() => {
         setText(text)
         setArray(map);
+        const fetchData = async () => {
+            try {
+                const response = await axios.get(`${config.api}/chats/${id}`, {
+                    headers: {
+                        'Content-Type': 'application/json',
+                        'ngrok-skip-browser-warning': 'true',
+                    },
+                    withCredentials: true,
+                });
+                setText([
+                    ...text,
+                    ...response.data.map(item => [
+                        {
+                            User: true,
+                            Text: item.userChat,
+                            Type: 'B'
+                        },
+                        {
+                            User: false,
+                            Text: item.botChat,
+                            Type: 'B'
+                        }
+                    ]).flat(),
+                ]);
+            } catch (error) {
+                console.error('데이터 가져오기 실패:', error);
+            }
+        };
+        fetchData();
     }, []);
 
     const TextInput = () => {
@@ -62,22 +104,21 @@ export default function Chat({ Obj, size, left, bottom, anime, id, text, map, ob
                     });
                     setCheck(response.data.score);
                     const moves = response.data.move;
-                    console.log(moves);
                     for (const direction of moves) {
                         await new Promise(resolve => {
                             setTimeout(() => {
                                 switch (direction) {
                                     case 'r':
-                                        Right(array, setArray);
+                                        move(array, setArray, 'right', temp, setTemp);
                                         break;
                                     case 'l':
-                                        Left(array, setArray);
+                                        move(array, setArray, 'left', temp, setTemp);
                                         break;
                                     case 'u':
-                                        Up(array, setArray);
+                                        move(array, setArray, 'up', temp, setTemp);
                                         break;
                                     case 'd':
-                                        Down(array, setArray);
+                                        move(array, setArray, 'down', temp, setTemp);
                                         break;
                                     case '5':
                                         break;
@@ -85,15 +126,15 @@ export default function Chat({ Obj, size, left, bottom, anime, id, text, map, ob
                                         console.warn(`알 수 없는 방향: ${direction}`);
                                 }
                                 resolve();
-                            }, 500);
+                            }, 500); // 0.5초 간격으로 이동 처리
                         });
                     }
-
                 } catch (error) {
                     console.error('실패', error);
                     console.error('에러 응답:', error.response);
                     setText(prevText => {
                         const updatedText = prevText.filter(item => item.Text !== "⦁ ⦁ ⦁");
+                        if (error.status === 400) return [...updatedText, { User: false, Text: error.response.data.message, Type: "B" }];
                         return [...updatedText, { User: false, Text: "죄송합니다. 오류가 발생했습니다.", Type: "B" }];
                     });
                 }
@@ -117,14 +158,14 @@ export default function Chat({ Obj, size, left, bottom, anime, id, text, map, ob
 
     return (
         <Container>
-            <BackBtn title={`stages/${title}`}/>
-            <Simulator array={array} img={object}/>
+            <BackBtn title={`stages/${title}`} />
+            <Simulator array={array} img={object} />
             <ChatBg>
                 <Chating ref={chatingRef}>
                     {Text.map((item, index) => (
                         item.Type == "B" ?
                             <Ballon key={index} User={item.User} Num={index} Text={item.Text} /> :
-                            <CheckList key={index} Text={item.Text} check={check[index-1]}/>
+                            <CheckList key={index} Text={item.Text} check={check[index - 1]} />
                     ))}
                 </Chating>
                 {

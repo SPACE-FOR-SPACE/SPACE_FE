@@ -63,7 +63,7 @@ export default function Volcano() {
         <>
             <QuizBg $bg={"volcano"}/>
             <Cloud />
-            <Chat Obj={'volcano'} size={120} left={-12} bottom={-5} anime={true} id={id} text={text} map={map}/>
+            <Chat Obj={'volcano'} size={120} left={-12} bottom={-5} anime={true} id={id} text={text} map={map} title={3}/>
         </>
     )
 }

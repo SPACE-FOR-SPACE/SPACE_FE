@@ -5,7 +5,7 @@ import * as S from './style'
 import naver from "../../assets/etc/Login/naver.svg";
 import google from "../../assets/etc/Login/google.svg";
 import kakao from "../../assets/etc/Login/kakao.svg";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import img from '../../assets/etc/BackBtn.svg';
 import config from "../../config";
 
@@ -25,6 +25,7 @@ export default function Login() {
     };
 
     async function Submit() {
+        console.log("성공")
         const { email, password } = input;
 
         try {
@@ -61,11 +62,11 @@ export default function Login() {
                 <tbody>
                     <tr>
                         <S.Lname>이메일</S.Lname>
-                        <td><S.Input name="email" onChange={InputChange} value={input.email} placeholder="이메일를 입력해주세요" /></td>
+                        <td><S.Input name="email" onChange={InputChange} value={input.email} placeholder="이메일를 입력해주세요" onKeyDown={(e) => e.key === 'Enter' && Submit()} /></td>
                     </tr>
                     <tr>
                         <S.Lname>비밀번호</S.Lname>
-                        <td><S.Input name="password" onChange={InputChange} value={input.password} type="password" placeholder="비밀번호를 입력해주세요" /></td>
+                        <td><S.Input name="password" onChange={InputChange} value={input.password} type="password" placeholder="비밀번호를 입력해주세요" onKeyDown={(e) => e.key === 'Enter' && Submit()} /></td>
                     </tr>
                     <S.Info>
                         <td></td>

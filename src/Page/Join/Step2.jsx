@@ -3,7 +3,7 @@ import axios from 'axios';
 import config from "../../config.js";
 import * as S from './style';
 
-export default function Step2({ setStep, step, setInputs, inputs, setErrorMessages, errorMessages }) {
+export default function Step2({ step, setStep, setInputs, inputs, setErrorMessages, errorMessages }) {
     const [isEmailValid, setIsEmailValid] = useState(false);
     const [isEmailSent, setIsEmailSent] = useState(false);
 
@@ -22,8 +22,7 @@ export default function Step2({ setStep, step, setInputs, inputs, setErrorMessag
         if (!username || !email || !password || !confirmPassword) {
             alert("항목을 전부 입력해 주세요.");
         } else if (Object.keys(errorMessages).length === 0) {
-            setStep(step + 1);
-            Submit();
+            setStep(step+1);
         } else {
             console.log(Object.keys(errorMessages).length)
             console.log(errorMessages);
@@ -130,7 +129,7 @@ export default function Step2({ setStep, step, setInputs, inputs, setErrorMessag
                             />
                             <S.EmailCheckBtn onClick={emailCheck}>인증하기</S.EmailCheckBtn>
                             {isEmailSent && isEmailValid ? (
-                                <S.Passmsg style={{ color: 'green' }}>인증 메일이 발송되었습니다. 이메일을 확인해 주세요.</S.Passmsg>
+                                <S.Passmsg style={{ color: '#04C604' }}>인증 메일이 발송되었습니다. 이메일을 확인해 주세요.</S.Passmsg>
                             ) : (
                                 <S.Passmsg>{errorMessages.email}</S.Passmsg>
                             )}
@@ -162,7 +161,7 @@ export default function Step2({ setStep, step, setInputs, inputs, setErrorMessag
                             {errorMessages.confirmPassword ? (
                                 <S.Passmsg>{errorMessages.confirmPassword}</S.Passmsg>
                             ) : inputs.password ? (
-                                <S.Passmsg style={{ color: 'green' }}>비밀번호가 일치합니다.</S.Passmsg>
+                                <S.Passmsg style={{ color: '#04C604' }}>비밀번호가 일치합니다.</S.Passmsg>
                             ) : (
                                 ""
                             )}
@@ -172,7 +171,7 @@ export default function Step2({ setStep, step, setInputs, inputs, setErrorMessag
             </S.InputTable>
             <S.Center>
                 <S.JoinBtn onClick={NextStep}>
-                    회원가입
+                    다음단계
                 </S.JoinBtn>
             </S.Center>
         </>

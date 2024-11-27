@@ -9,46 +9,33 @@ function MyXY(array) {
     return null;
 }
 
-export function Up(arr, setArr) {
+export function move(arr, setArr, direction, temp, setTemp) {
+    console.log(arr, direction, temp, setTemp);
     const newArray = [...arr];
-    let [X, Y] = MyXY(newArray);
-    const targetX = X - 1;
+    const position = MyXY(newArray);
 
-    if (targetX >= 0 && newArray[targetX][Y] !== 3 && Math.floor(newArray[targetX][Y] / 2000) !== 1) {
-        [newArray[X][Y], newArray[targetX][Y]] = [2, newArray[X][Y]];
-        setArr([...newArray]);
-    }
-}
+    if (position === null) return;
 
-export function Down(arr, setArr) {
-    const newArray = [...arr];
-    let [X, Y] = MyXY(newArray);
-    const targetX = X + 1;
+    let [X, Y] = position;
 
-    if (targetX < newArray.length && newArray[targetX][Y] !== 3 && Math.floor(newArray[targetX][Y] / 2000) !== 1) {
-        [newArray[X][Y], newArray[targetX][Y]] = [2, newArray[X][Y]];
-        setArr([...newArray]);
-    }
-}
+    let targetX = X;
+    let targetY = Y;
 
-export function Left(arr, setArr) {
-    const newArray = [...arr];
-    let [X, Y] = MyXY(newArray);
-    const targetY = Y - 1;
+    if (direction === 'up') targetX -= 1;
+    if (direction === 'down') targetX += 1;
+    if (direction === 'left') targetY -= 1;
+    if (direction === 'right') targetY += 1;
 
-    if (targetY >= 0 && newArray[X][targetY] !== 3 && Math.floor(newArray[X][targetY] / 2000) !== 1) {
-        [newArray[X][Y], newArray[X][targetY]] = [2, newArray[X][Y]];
-        setArr([...newArray]);
-    }
-}
+    if (
+        targetX >= 0 && targetX < newArray.length &&
+        targetY >= 0 && targetY < newArray[targetX].length &&
+        newArray[targetX][targetY] !== 3 &&
+        Math.floor(newArray[targetX][targetY] / 2000) !== 1
+    ) {
+        newArray[X][Y] = temp;
+        setTemp(newArray[targetX][targetY]);
+        newArray[targetX][targetY] = 0;
 
-export function Right(arr, setArr) {
-    const newArray = [...arr];
-    let [X, Y] = MyXY(newArray);
-    const targetY = Y + 1;
-
-    if (targetY < newArray[X].length && newArray[X][targetY] !== 3 && Math.floor(newArray[X][targetY] / 2000) !== 1) {
-        [newArray[X][Y], newArray[X][targetY]] = [2, newArray[X][Y]];
         setArr([...newArray]);
     }
 }

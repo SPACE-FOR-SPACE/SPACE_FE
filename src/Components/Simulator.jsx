@@ -18,7 +18,7 @@ export default function Simulator({array, img}) {
                     {array.map((row, rowIndex) => (
                         <tr key={rowIndex}>
                             {row.map((cell, cellIndex) => (
-                                <Piece key={cellIndex} img={item[cell]}>{cell}</Piece>
+                                <Piece key={cellIndex} img={item[cell]}></Piece>
                             ))}
                         </tr>
                     ))}
