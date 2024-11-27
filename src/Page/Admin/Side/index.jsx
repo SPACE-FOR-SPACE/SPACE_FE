@@ -9,7 +9,7 @@ export default function Side({ title }) {
         <Aside>
             <List>
                 <ListItem value={title === 1} onClick={() => navigate('/admin/incorrect')}>어휘오답</ListItem>
-                <ListItem value={title === 2} onClick={() => navigate('/admin/class')}>최다 빈도 단어</ListItem>
+                <ListItem value={title === 2} onClick={() => navigate('/admin/maximun')}>최다 빈도 단어</ListItem>
                 <ListItem value={title === 3} onClick={() => navigate('/admin/class')}>클래스룸</ListItem>
                 <ListItem value={title === 4} onClick={() => navigate('/admin/question')}>자주 묻는 질문</ListItem>
             </List>

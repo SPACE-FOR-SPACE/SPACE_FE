@@ -44,7 +44,6 @@ export default function Chat({ Obj, size, left, bottom, anime, id, text, map, ob
                 const response = await axios.get(`${config.api}/chats/${id}`, {
                     headers: {
                         'Content-Type': 'application/json',
-                        'ngrok-skip-browser-warning': 'true',
                     },
                     withCredentials: true,
                 });
@@ -158,7 +157,7 @@ export default function Chat({ Obj, size, left, bottom, anime, id, text, map, ob
     return (
         <Container>
             <BackBtn title={`stages/${title}`} />
-            <Simulator array={array} img={object} />
+            <Simulator array={array} img={object} title={title}/>
             <ChatBg>
                 <Chating ref={chatingRef}>
                     {Text.map((item, index) => (

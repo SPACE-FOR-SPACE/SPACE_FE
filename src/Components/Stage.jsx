@@ -1,7 +1,7 @@
 import styled from "styled-components";
 import { useLocation, useNavigate } from 'react-router-dom';
 
-export default function Stage() {
+export default function Stage({title}) {
     const location = useLocation();
     const navigate = useNavigate();
     const currentId = parseInt(location.pathname.split('/').pop(), 10);
@@ -16,7 +16,7 @@ export default function Stage() {
     return (
         <Box>
             {pointIds.map((id) => (
-                <Point key={id} $bg={currentId === id} onClick={() => changeId(id)} />
+                <Point key={id} $bg={currentId === id + (title - 1) * 10} onClick={() => changeId(id + (title - 1) * 10)} />
             ))}
         </Box>
     );

@@ -1,12 +1,12 @@
 import React from "react";
 import styled from "styled-components";
 
-export default function Member({ profile }) {
+export default function Member({ profile, name }) {
     return (
         <Container>
             <Profile src={profile} />
             <Box>
-                <Name>남예준</Name>
+                <Name>{name}</Name>
                 <Move>풀이내역 확인 ➜</Move>
             </Box>
         </Container>

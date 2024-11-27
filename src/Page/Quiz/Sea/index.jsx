@@ -20,7 +20,6 @@ export default function Sea() {
                 const response1 = await axios.get(`${config.api}/quizzes/${id}`, {
                     headers: {
                         'Content-Type': 'application/json',
-                        'ngrok-skip-browser-warning': 'true',
                     },
                     withCredentials: true,
                 });
@@ -28,7 +27,6 @@ export default function Sea() {
                 const response2 = await axios.get(`${config.api}/checklists/quiz/${id}`, {
                     headers: {
                         'Content-Type': 'application/json',
-                        'ngrok-skip-browser-warning': 'true',
                     },
                     withCredentials: true,
                 });
@@ -36,7 +34,6 @@ export default function Sea() {
                 const response3 = await axios.get(`${config.api}/chapters/2`, {
                     headers: {
                         'Content-Type': 'application/json',
-                        'ngrok-skip-browser-warning': 'true',
                     },
                     withCredentials: true,
                 });

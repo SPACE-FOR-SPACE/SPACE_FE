@@ -32,7 +32,6 @@ export default function LandingPage({ setMainLogin }) {
         const response = await axios.get(`${config.api}/check`, {
           headers: {
             'Content-Type': 'application/json',
-            'ngrok-skip-browser-warning': 'true',
           },
           withCredentials: true,
         });

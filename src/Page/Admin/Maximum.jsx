@@ -13,7 +13,7 @@ import styled from "styled-components";
 
 ChartJS.register(ArcElement, Tooltip, Legend);
 
-export default function Incorrect() {
+export default function Maximun() {
 
     const [user, setUser] = useState('');
 
@@ -60,26 +60,17 @@ export default function Incorrect() {
     return (
         <div>
             <S.Body />
-            <Header user={user}/>
+            <Header user={user} />
             <S.Container>
-                <Side title={1} />
+                <Side title={2} />
                 <S.Section>
                     <S.Title>
-                        <span>{user}</span>님의 어휘오답내역
+                        <span>{user}</span>의 최다 빈도 단어
                     </S.Title>
                     <ChartLayout>
                         <PieChart>
                             <Pie data={data} options={options} />
                         </PieChart>
-                        <ChartText>
-                            <p>
-                                안녕하세요, 학부모님. 아이가 ‘아프로(앞으로)’, ‘아페(앞에)’, ‘핵득하기(획득하기)’ 등 단어를 자주 틀린 것을 확인했습니다.
-                                <br />
-                                일상 대화에서 틀린 단어를 포함한 짧은 문장을 자주 사용해 보세요. 예를 들어, “앞으로 가볼까?” 또는 “얻기를 해보자!” 같은 문장이 도움이 될 수 있습니다.
-                                <br />
-                                올바르게 사용할 때마다 칭찬하며 자신감을 키워주세요!
-                            </p>
-                        </ChartText>
                     </ChartLayout>
                 </S.Section>
             </S.Container>
@@ -89,19 +80,14 @@ export default function Incorrect() {
 
 const ChartLayout = styled.div`
   display: flex;
-  flex-direction: row;
+  justify-content: center;
   align-items: center; 
-  gap: 20px;
+  margin: 0 auto;
+  margin-top: -50px;
+  height: 80%; 
 `;
 
 const PieChart = styled.div`
-  width: 500px;
+  width: 600px;
   height: 400px;
-`;
-
-const ChartText = styled.div`
-  flex: 1;
-  font-size: 16px;
-  line-height: 1.5;
-  color: #333;
 `;

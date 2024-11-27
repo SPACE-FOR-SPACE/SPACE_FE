@@ -2,7 +2,7 @@ import { useState, useEffect } from "react";
 import Stage from "./Stage";
 import styled from "styled-components";
 
-export default function Simulator({array, img}) {
+export default function Simulator({array, img, title}) {
     const [item, setItem] = useState([]);
 
     useEffect(() => {
@@ -22,7 +22,7 @@ export default function Simulator({array, img}) {
                     ))}
                 </tbody>
             </Map>
-            <Stage />
+            <Stage title={title}/>
         </SimulBg>
     );
 }

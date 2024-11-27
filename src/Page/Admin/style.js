@@ -28,6 +28,7 @@ export const Section = styled.section`
 export const Container = styled.div`
     display: flex;
     justify-content: flex-start;
+    overflow: hidden;
     gap: 20px; 
     
 `;

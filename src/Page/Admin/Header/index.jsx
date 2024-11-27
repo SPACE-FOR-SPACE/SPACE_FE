@@ -2,6 +2,56 @@ import { useEffect, useState } from "react";
 import img from '../../../assets/etc/BackBtn.svg';
 import logout from '../../../assets/etc/Logout.svg';
 import styled from "styled-components";
+import axios from "axios";
+import config from "../../../config";
+import { useNavigate } from "react-router-dom";
+
+export default function Header() {
+    const [user, setUser] = useState('');
+    const navigate = useNavigate();
+
+    useEffect(() => {
+        const User = async () => {
+            try {
+                const username = localStorage.getItem('username');
+                setUser(username);
+            } catch (error) {
+                console.error('실패:', error);
+            }
+        };
+
+        User();
+    }, []);
+
+    async function Logout() {
+        try {
+            await axios.post(`${config.api}/logout`, {}, {
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                withCredentials: true
+            });
+            console.log('로그아웃');
+            window.location.reload();
+        } catch (error) {
+            console.error('로그아웃 실패', error);
+        }
+    }
+
+    return (
+        <HeaderContainer>
+            <Btn onClick={() => navigate('/')}>
+                <img src={img} />
+            </Btn>
+            <RightContainer>
+                <Title>안녕하세요, {user}님!</Title>
+                <Btn onClick={() => Logout()}>
+                    <img src={logout} />
+                </Btn>
+            </RightContainer>
+        </HeaderContainer>
+    )
+}
 
 const HeaderContainer = styled.header`
     display: flex;
@@ -48,21 +98,3 @@ const Btn = styled.button`
         user-select: none;
     }
 `
-
-export default function Header() {
-    const [user, setUser] = useState('김민주');
-
-    return (
-        <HeaderContainer>
-            <Btn>
-                <img src={img} />
-            </Btn>
-            <RightContainer>
-                <Title>안녕하세요, {user}님!</Title>
-                <Btn>
-                    <img src={logout} />
-                </Btn>
-            </RightContainer>
-        </HeaderContainer>
-    )
-}

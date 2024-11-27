@@ -39,7 +39,6 @@ export default function Stages() {
   //       const response = await axios.get(`${config.api}/chapters/${id}/quizzes`, {
   //         headers: {
   //           'Content-Type': 'application/json',
-  //           'ngrok-skip-browser-warning': 'true',
   //         },
   //         withCredentials: true,
   //       });

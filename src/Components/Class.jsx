@@ -1,17 +1,19 @@
 import React from "react";
 import styled from "styled-components";
 import { IoIosArrowForward } from "react-icons/io";
+import { useNavigate } from "react-router-dom";
 
-export default function Class({ title, members, deadline }) {
+export default function Class({ title, members, index }) {
+    const navigate = useNavigate();
+
     return (
         <Card>
             <Header>{title}</Header>
             <Footer>
                 <TextContainer>
                     <div>인원 : {members}</div>
-                    <div>과제기한 : {deadline}</div>
                 </TextContainer>
-                <Button><IoIosArrowForward /></Button>
+                <Button onClick={() => navigate(`${index}`)}><IoIosArrowForward /></Button>
             </Footer>
         </Card>
     );

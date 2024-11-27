@@ -5,31 +5,59 @@ import Side from "./Side";
 import Class from "../../Components/Class";
 import { FiPlus } from "react-icons/fi";
 import styled from "styled-components";
+import config from "../../config";
+import axios from "axios";
 
 export default function ClassRoom() {
+    const [user, setUser] = useState('');
+    const [ClassList, setClassList] = useState([]);
+
+    useEffect(() => {
+        const User = async () => {
+            try {
+                const username = localStorage.getItem('username');
+                setUser(username);
+            } catch (error) {
+                console.error('실패:', error);
+            }
+        };
+
+        User();
+
+        const ClassList = async () => {
+            try {
+                const response = await axios.get(`${config.api}/trainings`, {
+                    headers: {
+                        'Content-Type': 'application/json',
+                    },
+                    withCredentials: true,
+                });
+                setClassList(response.data);
+
+            } catch (error) {
+                console.error('실패:', error);
+            }
+        };
+
+        ClassList();
+    }, []);
     return (
         <div>
             <S.Body />
-            <Header />
+            <Header user={user} />
             <S.Container>
                 <Side title={3} />
                 <AddClass><FiPlus /></AddClass>
                 <S.Section>
-                    <S.Title><span>김민주</span>님의 클래스룸</S.Title>
+                    <S.Title><span>{user}</span>님의 클래스룸</S.Title>
                     <Scroll>
                         <ClassContainer>
-                            <Class title="2-1 모임" members={16} deadline="12월 12일" />
-                            <Class title="2-1 모임" members={16} deadline="12월 12일" />
-                            <Class title="2-1 모임" members={16} deadline="12월 12일" />
-                            <Class title="2-1 모임" members={16} deadline="12월 12일" />
-                            <Class title="2-1 모임" members={16} deadline="12월 12일" />
-                            <Class title="2-1 모임" members={16} deadline="12월 12일" />
-                            <Class title="2-1 모임" members={16} deadline="12월 12일" />
-                            <Class title="2-1 모임" members={16} deadline="12월 12일" />
-                            <Class title="2-1 모임" members={16} deadline="12월 12일" />
-                            <Class title="2-1 모임" members={16} deadline="12월 12일" />
-                            <Class title="2-1 모임" members={16} deadline="12월 12일" />
-                            <Class title="2-1 모임" members={16} deadline="12월 12일" />
+                            {
+                                ClassList.map((item, index) => (
+                                    <Class key={index} title={item.title} members={16} index={item.id}/>
+                                ))
+                            }
+
                         </ClassContainer>
                     </Scroll>
                 </S.Section>
@@ -49,7 +77,7 @@ export const ClassContainer = styled.div`
     margin: 0 auto;
 `;
 
-export const Scroll = styled.div `
+export const Scroll = styled.div`
     width: 95%;
     height: 70vh;
     margin: 0 auto;
