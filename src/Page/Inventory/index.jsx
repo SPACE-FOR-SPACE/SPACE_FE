@@ -7,6 +7,7 @@ const API_URL = "https://cc60-211-182-230-53.ngrok-free.app";
 export default function Inventory() {
     const [test, setTest] = useState();
     const [loading, setLoading] = useState(true);
+    console.log(import.meta.env.VITE_API_URL);
 
     useEffect(() => {
         const Items = async () => {

@@ -29,6 +29,8 @@ export default function LandingPage({ setMainLogin }) {
   useEffect(() => {
     const fetchData = async () => {
       try {
+        console.log(import.meta.env.VITE_API_URL);
+
         const response = await axios.get(`${config.api}/check`, {
           headers: {
             'Content-Type': 'application/json',
@@ -36,6 +38,7 @@ export default function LandingPage({ setMainLogin }) {
           },
           withCredentials: true,
         });
+        
         console.log(response);
         if (response.status === 200) {
           setLogin(true)
