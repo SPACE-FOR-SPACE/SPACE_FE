@@ -36,6 +36,8 @@ jobs:
         with:
           context: .
           push: true
+          build-args: |
+            VITE_API_URL=${{ secrets.VITE_API_URL }}
           tags: ${{ secrets.DOCKERHUB_USERNAME }}/space_front:latest
       
       - name: Deploy to Server
