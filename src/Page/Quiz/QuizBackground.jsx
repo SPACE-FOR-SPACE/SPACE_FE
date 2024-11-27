@@ -1,6 +1,6 @@
 import { createGlobalStyle } from "styled-components";
 import plant from "../../assets/Background/plant.svg";
-import volcano from "../../assets/Background/sea.svg";
+import volcano from "../../assets/Background/volcano.svg";
 import sea from "../../assets/Background/sea.svg";
 
 const backgrounds = {

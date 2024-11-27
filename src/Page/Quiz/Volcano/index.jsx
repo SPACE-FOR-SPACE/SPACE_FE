@@ -1,9 +1,10 @@
 import { useParams } from 'react-router-dom';
 import { useEffect, useState } from 'react';
+import { createGlobalStyle } from "styled-components";
 
 import Chat from '../../../Components/Chat.jsx'
 import Cloud from './Cloud.jsx'
-import QuizBg from "../QuizBackground.jsx";
+import QuizBg from "../Quiz/Background.jsx";
 import Loading from '../../Loading/index.jsx';
 import axios from 'axios';
 import config from '../../../config.js';
@@ -59,9 +60,27 @@ export default function Volcano() {
 
     return (
         <>
-            <QuizBg $bg={"volcano"}/>
+            <GlobalStyles />
             <Cloud />
             <Chat Obj={'volcano'} size={120} left={-12} bottom={-5} anime={true} id={id} text={text} map={map} title={3}/>
         </>
     )
 }
+
+const GlobalStyles = createGlobalStyle`
+    body {
+        width: 100vw;
+        height: 100vh; 
+        margin: 0;
+        background-image: linear-gradient(#1E0233 20%, #8C0017 100%);
+        background-repeat: no-repeat;
+        background-size: cover;
+        background-position: center;
+        background-attachment: fixed;
+        overflow: hidden;
+        -webkit-user-drag: none;
+        -moz-user-drag: none;
+        -ms-user-drag: none;
+        user-select: none;
+    }
+`;
