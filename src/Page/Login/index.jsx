@@ -25,7 +25,6 @@ export default function Login() {
     };
 
     async function Submit() {
-        console.log("성공")
         const { email, password } = input;
 
         try {

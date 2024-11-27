@@ -59,9 +59,6 @@ export default function Stages() {
         {quizzes.map((quiz, index) => (
           <StageButton key={quiz.id} onClick={() => { console.log(`/${planets[id]}/${quiz.id + 10 * (id - 1)}`); navigate(`/${planets[id]}/${quiz.id + 10 * (id - 1)}`) }}>
             <Light />
-            <img
-              alt={`Stage ${quiz.id + 10 * (id - 1)}`}
-            />
             <span>{index + 1}</span>
           </StageButton>
         ))}
@@ -93,25 +90,17 @@ const StageButton = styled.button`
   background: none;
   border: none;
   cursor: pointer;
-  width: 20vh; 
-  height: 20vh; 
-
-  img {
-    position: absolute;
-    top: 0;
-    left: 0;
-    width: 20vh;
-    height: auto;
-    -webkit-user-drag: none;
-    -moz-user-drag: none;
-    -ms-user-drag: none;
-    user-select: none;
-    z-index: 2;
-    content: url(${list1}); /* 기본 이미지 */
-
-    &:hover {
-      content: url(${list2}); /* 호버 시 이미지 */
-    }
+  width: 20vh;
+  height: 20vh;
+  
+  /* 기본 배경 이미지 */
+  background-image: url(${list1});
+  background-size: cover;
+  background-position: center;
+  
+  /* 호버 시 배경 이미지 변경 */
+  &:hover {
+    background-image: url(${list2});
   }
 
   span {
@@ -122,7 +111,7 @@ const StageButton = styled.button`
     color: white;
     font-weight: bold;
     font-size: 7vh;
-    z-index: 3;
+    z-index: 2; /* 텍스트가 이미지 위에 오도록 */
     pointer-events: none;
   }
 `;
