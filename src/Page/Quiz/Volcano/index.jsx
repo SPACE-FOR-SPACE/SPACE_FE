@@ -4,7 +4,6 @@ import { createGlobalStyle } from "styled-components";
 
 import Chat from '../../../Components/Chat.jsx'
 import Cloud from './Cloud.jsx'
-import QuizBg from "../Quiz/Background.jsx";
 import Loading from '../../Loading/index.jsx';
 import axios from 'axios';
 import config from '../../../config.js';

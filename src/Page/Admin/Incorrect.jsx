@@ -100,7 +100,7 @@ const PieChart = styled.div`
 `;
 
 const ChartText = styled.div`
-  flex: 1;
+  width:500px;
   font-size: 16px;
   line-height: 1.5;
   color: #333;
