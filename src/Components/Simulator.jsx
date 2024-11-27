@@ -7,8 +7,6 @@ export default function Simulator({array, img}) {
 
     useEffect(() => {
         setItem(img);
-        console.log(img);
-        console.log(array);
     }, []);
     
     return (

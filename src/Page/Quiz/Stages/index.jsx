@@ -60,7 +60,6 @@ export default function Stages() {
           <StageButton key={quiz.id} onClick={() => { console.log(`/${planets[id]}/${quiz.id + 10 * (id - 1)}`); navigate(`/${planets[id]}/${quiz.id + 10 * (id - 1)}`) }}>
             <Light />
             <img
-              src={list1}
               alt={`Stage ${quiz.id + 10 * (id - 1)}`}
             />
             <span>{index + 1}</span>

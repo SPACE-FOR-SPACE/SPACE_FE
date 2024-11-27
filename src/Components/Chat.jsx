@@ -131,7 +131,6 @@ export default function Chat({ Obj, size, left, bottom, anime, id, text, map, ob
                     }
                 } catch (error) {
                     console.error('실패', error);
-                    console.error('에러 응답:', error.response);
                     setText(prevText => {
                         const updatedText = prevText.filter(item => item.Text !== "⦁ ⦁ ⦁");
                         if (error.status === 400) return [...updatedText, { User: false, Text: error.response.data.message, Type: "B" }];
