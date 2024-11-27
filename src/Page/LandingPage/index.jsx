@@ -19,7 +19,7 @@ export default function LandingPage({setMainLogin}) {
   useEffect(() => {
     const fetchData = async () => {
       try {
-        console.log(import.meta.env);
+        console.log(window.VITE_API_URL);
 
         const response = await axios.get(`${config.api}/check`, {
           headers: {
