@@ -45,6 +45,7 @@ jobs:
           username: ubuntu
           key: ${{ secrets.EC2_SSH_KEY }}
           script: |
-
+            sudo docker stop space_front
+            sudo docker rm space_front
             sudo docker pull ${{ secrets.DOCKERHUB_USERNAME }}/space_front:latest
             sudo docker-compose -f docker-compose-react.yml up -d
