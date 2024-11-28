@@ -72,6 +72,8 @@ export default function Chat({ Obj, size, left, bottom, anime, id, text, map, ob
 
     const TextInput = () => {
         if (input.trim()) {
+            setArray(map);
+            setDirection(dir);
             const Chating = async () => {
                 try {
                     const newText = [...Text, { User: true, Text: input, Type: "B" }];
