@@ -143,7 +143,7 @@ export const MainTitle2 = styled.h1`
 export const Text = styled.div `
     position: absolute;
     text-align: left;
-    line-height: 6vh;
+    line-height: 2.5rem;
     top: 42vh;
     left: 30vh;
     color: white;
