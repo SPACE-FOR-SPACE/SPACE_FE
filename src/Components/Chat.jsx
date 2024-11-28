@@ -28,20 +28,6 @@ export default function Chat({ Obj, size, left, bottom, anime, id, text, map, ob
     ]
 
     useEffect(() => {
-        const handleKeyDown = (e) => {
-            if (e.key === "ArrowUp") move(array, setArray, 'up', temp, setTemp, setDirection);
-            if (e.key === "ArrowDown") move(array, setArray, 'down', temp, setTemp, setDirection);
-            if (e.key === "ArrowLeft") move(array, setArray, 'left', temp, setTemp, setDirection);
-            if (e.key === "ArrowRight") move(array, setArray, 'right', temp, setTemp, setDirection);
-        };
-
-        window.addEventListener("keydown", handleKeyDown);
-        return () => {
-            window.removeEventListener("keydown", handleKeyDown);
-        };
-    }, [array, temp]);
-
-    useEffect(() => {
         setText(text)
         setArray(map);
         const fetchData = async () => {
@@ -76,10 +62,12 @@ export default function Chat({ Obj, size, left, bottom, anime, id, text, map, ob
 
     const TextInput = () => {
         if (input.trim()) {
-            setArray(save[0]);
-            setDirection(save[1]);
             const Chating = async () => {
                 try {
+                    console.log(save);
+                    setArray(save[0]);
+                    setDirection(save[1]);
+                    console.log(array, dir);
                     const newText = [...Text, { User: true, Text: input, Type: "B" }];
                     setText(newText);
                     const Temp = input;
@@ -156,7 +144,7 @@ export default function Chat({ Obj, size, left, bottom, anime, id, text, map, ob
             TextInput();
         }
     };
-    
+
 
     useEffect(() => {
         if (chatingRef.current) {
@@ -167,7 +155,7 @@ export default function Chat({ Obj, size, left, bottom, anime, id, text, map, ob
     return (
         <Container>
             <BackBtn title={`stages/${title}`} />
-            <Simulator array={array} img={object} title={title} direction={direction}/>
+            <Simulator array={array} img={object} title={title} direction={direction} />
             <ChatBg>
                 <Chating ref={chatingRef}>
                     {Text.map((item, index) => (
