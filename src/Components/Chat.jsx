@@ -22,6 +22,10 @@ export default function Chat({ Obj, size, left, bottom, anime, id, text, map, ob
     const [check, setCheck] = useState([]);
     const [temp, setTemp] = useState(2);
     const [direction, setDirection] = useState(dir);
+    const save = [
+        map,
+        dir
+    ]
 
     useEffect(() => {
         const handleKeyDown = (e) => {
@@ -72,8 +76,8 @@ export default function Chat({ Obj, size, left, bottom, anime, id, text, map, ob
 
     const TextInput = () => {
         if (input.trim()) {
-            setArray(map);
-            setDirection(dir);
+            setArray(save[0]);
+            setDirection(save[1]);
             const Chating = async () => {
                 try {
                     const newText = [...Text, { User: true, Text: input, Type: "B" }];
