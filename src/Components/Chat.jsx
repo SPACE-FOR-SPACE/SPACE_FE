@@ -61,10 +61,6 @@ export default function Chat({ Obj, size, left, bottom, anime, id, text, map, ob
     }, []);
 
     const TextInput = () => {
-        console.log(save);
-        setArray(save[0]);
-        setDirection(save[1]);
-        console.log(array, dir);
         if (input.trim()) {
             const Chating = async () => {
                 try {
@@ -141,6 +137,8 @@ export default function Chat({ Obj, size, left, bottom, anime, id, text, map, ob
 
     const InputEnter = (e) => {
         if (e.key === "Enter" && !load) {
+            setArray(save[0]);
+            setDirection(save[1]);
             TextInput();
         }
     };
@@ -169,7 +167,11 @@ export default function Chat({ Obj, size, left, bottom, anime, id, text, map, ob
                 }
                 <InputBox>
                     <Input ref={inputRef} value={input} onChange={(e) => setInput(e.target.value)} onKeyDown={InputEnter} />
-                    <InputBtn onClick={() => TextInput()} disabled={load}>
+                    <InputBtn onClick={() => {
+                        setArray(save[0]);
+                        setDirection(save[1]);
+                        TextInput();
+                    }} disabled={load}>
                         <Arrow src={arrow} alt="send" />
                     </InputBtn>
                 </InputBox>
