@@ -34,7 +34,7 @@ export default function Chat({ Obj, size, left, bottom, anime, id, text, map, ob
         return () => {
             window.removeEventListener("keydown", handleKeyDown);
         };
-    }, [array]);
+    }, [array, temp]);
 
     useEffect(() => {
         setText(text)
@@ -120,6 +120,7 @@ export default function Chat({ Obj, size, left, bottom, anime, id, text, map, ob
                                         move(array, setArray, 'down', temp, setTemp);
                                         break;
                                     case '5':
+                                        move(array, setArray, 'action', temp, setTemp);
                                         break;
                                     default:
                                         console.warn(`알 수 없는 방향: ${direction}`);
@@ -147,6 +148,7 @@ export default function Chat({ Obj, size, left, bottom, anime, id, text, map, ob
             TextInput();
         }
     };
+    
 
     useEffect(() => {
         if (chatingRef.current) {

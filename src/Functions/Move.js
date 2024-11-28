@@ -10,7 +10,6 @@ function MyXY(array) {
 }
 
 export function move(arr, setArr, direction, temp, setTemp) {
-    console.log(arr, direction, temp, setTemp);
     const newArray = [...arr];
     const position = MyXY(newArray);
 
@@ -20,14 +19,16 @@ export function move(arr, setArr, direction, temp, setTemp) {
 
     let targetX = X;
     let targetY = Y;
+   
 
     if (direction === 'up') targetX -= 1;
     if (direction === 'down') targetX += 1;
     if (direction === 'left') targetY -= 1;
     if (direction === 'right') targetY += 1;
-    if (direction === '5') setTemp(2);
 
-    if (
+    if (direction === 'action') {
+        setTemp(2);
+    } else if (
         targetX >= 0 && targetX < newArray.length &&
         targetY >= 0 && targetY < newArray[targetX].length &&
         newArray[targetX][targetY] !== 3 &&
