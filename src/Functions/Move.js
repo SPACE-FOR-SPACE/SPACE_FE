@@ -25,6 +25,7 @@ export function move(arr, setArr, direction, temp, setTemp) {
     if (direction === 'down') targetX += 1;
     if (direction === 'left') targetY -= 1;
     if (direction === 'right') targetY += 1;
+    if (direction === '5') setTemp(2);
 
     if (
         targetX >= 0 && targetX < newArray.length &&

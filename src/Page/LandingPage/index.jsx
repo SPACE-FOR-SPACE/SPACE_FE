@@ -35,7 +35,7 @@ export default function LandingPage({ setMainLogin }) {
           },
           withCredentials: true,
         });
-        
+
         if (response.status === 200) {
           setLogin(true)
         }
@@ -120,7 +120,9 @@ export default function LandingPage({ setMainLogin }) {
           <S.Menu active={pos === 1} onClick={() => handleMenuClick(1)}>메인</S.Menu>
           <S.Menu active={pos === 2} onClick={() => handleMenuClick(2)}>프로젝트 소개</S.Menu>
           <S.Menu active={pos === 3} onClick={() => handleMenuClick(3)}>팀 소개</S.Menu>
-          <S.Menu>커뮤니티</S.Menu>
+          <S.Menu as="a" href="https://spacecommunity.vercel.app/" target="_blank" rel="noopener noreferrer">
+            커뮤니티
+          </S.Menu>
         </S.Left>
         {
           login ?

@@ -13,6 +13,7 @@ export default function Volcano() {
     const [text, setText] = useState([]);
     const [map, setMap] = useState([]);
     const [loading, setLoading] = useState(true);
+    const [object, setObject] = useState([]);
 
     useEffect(() => {
         setLoading(true);
@@ -32,7 +33,18 @@ export default function Volcano() {
                     withCredentials: true,
                 });
 
+                const response3 = await axios.get(`${config.api}/chapters/2`, {
+                    headers: {
+                        'Content-Type': 'application/json',
+                    },
+                    withCredentials: true,
+                });
+
                 setMap(response1.data.map);
+                setObject({
+                    ...response1.data.mapObjectImage,
+                    ...response3.data.mapObjectImage
+                });
                 setText([
                     {
                         User: false,
@@ -55,13 +67,14 @@ export default function Volcano() {
         fetchData();
     }, [id]);
 
+
     if (loading) return <Loading />;
 
     return (
         <>
             <GlobalStyles />
             <Cloud />
-            <Chat Obj={'volcano'} size={120} left={-12} bottom={-5} anime={true} id={id} text={text} map={map} title={3}/>
+            <Chat Obj={'volcano'} size={120} left={-12} bottom={-5} anime={true} id={id} text={text} map={map} object={object} title={3}/>
         </>
     )
 }
