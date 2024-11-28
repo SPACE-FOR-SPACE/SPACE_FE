@@ -9,7 +9,7 @@ function MyXY(array) {
     return null;
 }
 
-export function move(arr, setArr, direction, temp, setTemp) {
+export function move(arr, setArr, direction, temp, setTemp, setDirection) {
     const newArray = [...arr];
     const position = MyXY(newArray);
 
@@ -19,12 +19,24 @@ export function move(arr, setArr, direction, temp, setTemp) {
 
     let targetX = X;
     let targetY = Y;
-   
 
-    if (direction === 'up') targetX -= 1;
-    if (direction === 'down') targetX += 1;
-    if (direction === 'left') targetY -= 1;
-    if (direction === 'right') targetY += 1;
+
+    if (direction === 'up') {
+        setDirection("UP");
+        targetX -= 1;
+    }
+    if (direction === 'down') {
+        setDirection("DOWN");
+        targetX += 1;
+    }
+    if (direction === 'left') {
+        setDirection("LEFT");
+        targetY -= 1;
+    }
+    if (direction === 'right') {
+        setDirection("RIGHT");
+        targetY += 1;
+    }
 
     if (direction === 'action') {
         setTemp(2);

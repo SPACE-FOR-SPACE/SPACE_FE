@@ -2,11 +2,11 @@ import { useState, useEffect } from "react";
 import Stage from "./Stage";
 import styled from "styled-components";
 
-export default function Simulator({array, img, title}) {
+export default function Simulator({array, img, title,   direction}) {
     const [item, setItem] = useState([]);
-
     useEffect(() => {
         setItem(img);
+        console.log(direction);
     }, []);
     
     return (
@@ -16,7 +16,12 @@ export default function Simulator({array, img, title}) {
                     {array.map((row, rowIndex) => (
                         <tr key={rowIndex}>
                             {row.map((cell, cellIndex) => (
-                                <Piece key={cellIndex} img={item[cell]}></Piece>
+                                <Piece key={cellIndex} img={item[cell]}>{
+                                    cell == 0 & direction === "RIGHT" ? '→' :
+                                    cell == 0 & direction === "LEFT" ? '←' :
+                                    cell == 0 & direction === "UP" ? '↑' :
+                                    cell == 0 & direction === "DOWN" ? '↓' : ''
+                                }</Piece>
                             ))}
                         </tr>
                     ))}
@@ -64,4 +69,7 @@ const Piece = styled.td`
     background-size: cover;
     background-position: center;
     background-repeat: no-repeat;
+    font-size: 5vh;
+    font-weight: 600;
+    color: rgba(255, 0, 0, 0.5);
 `

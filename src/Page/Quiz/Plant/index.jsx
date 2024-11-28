@@ -13,6 +13,7 @@ export default function Plant() {
     const [map, setMap] = useState([]);
     const [loading, setLoading] = useState(true);
     const [object, setObject] = useState([]);
+    const [dir, setDir] = useState("");
 
     useEffect(() => {
         setLoading(true);
@@ -56,6 +57,7 @@ export default function Plant() {
                     ...response3.data.mapObjectImage
                 });
                 setLoading(false);
+                setDir(response1.data.characterDirection);
             } catch (error) {
                 console.error('실패:', error);
                 setLoading(false);
@@ -73,7 +75,7 @@ export default function Plant() {
                 <>
                     <QuizBg $bg={"plant"} />
                     <Background />
-                    <Chat key={id} Obj={'none'} size={45} left={0} bottom={-2} anime={false} id={id} text={text} map={map} object={object} title={1}/>
+                    <Chat key={id} Obj={'none'} size={45} left={0} bottom={-2} anime={false} id={id} text={text} map={map} object={object} title={1} dir={dir}/>
                 </>
             )}
         </>

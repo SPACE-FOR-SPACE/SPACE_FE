@@ -11,7 +11,7 @@ import axios from "axios";
 import { move } from "../Functions/Move";
 import config from "../config";
 
-export default function Chat({ Obj, size, left, bottom, anime, id, text, map, object, title }) {
+export default function Chat({ Obj, size, left, bottom, anime, id, text, map, object, title, dir }) {
     const imageSrc = PlanetObj[0][Obj];
     const [input, setInput] = useState("");
     const chatingRef = useRef(null);
@@ -21,13 +21,14 @@ export default function Chat({ Obj, size, left, bottom, anime, id, text, map, ob
     const [Text, setText] = useState([]);
     const [check, setCheck] = useState([]);
     const [temp, setTemp] = useState(2);
+    const [direction, setDirection] = useState(dir);
 
     useEffect(() => {
         const handleKeyDown = (e) => {
-            if (e.key === "ArrowUp") move(array, setArray, 'up', temp, setTemp);
-            if (e.key === "ArrowDown") move(array, setArray, 'down', temp, setTemp);
-            if (e.key === "ArrowLeft") move(array, setArray, 'left', temp, setTemp);
-            if (e.key === "ArrowRight") move(array, setArray, 'right', temp, setTemp);
+            if (e.key === "ArrowUp") move(array, setArray, 'up', temp, setTemp, setDirection);
+            if (e.key === "ArrowDown") move(array, setArray, 'down', temp, setTemp, setDirection);
+            if (e.key === "ArrowLeft") move(array, setArray, 'left', temp, setTemp, setDirection);
+            if (e.key === "ArrowRight") move(array, setArray, 'right', temp, setTemp, setDirection);
         };
 
         window.addEventListener("keydown", handleKeyDown);
@@ -103,24 +104,25 @@ export default function Chat({ Obj, size, left, bottom, anime, id, text, map, ob
                     });
                     setCheck(response.data.score);
                     const moves = response.data.move;
+                    console.log(response);
                     for (const direction of moves) {
                         await new Promise(resolve => {
                             setTimeout(() => {
                                 switch (direction) {
                                     case 'r':
-                                        move(array, setArray, 'right', temp, setTemp);
+                                        move(array, setArray, 'right', temp, setTemp, setDirection);
                                         break;
                                     case 'l':
-                                        move(array, setArray, 'left', temp, setTemp);
+                                        move(array, setArray, 'left', temp, setTemp, setDirection);
                                         break;
                                     case 'u':
-                                        move(array, setArray, 'up', temp, setTemp);
+                                        move(array, setArray, 'up', temp, setTemp, setDirection);
                                         break;
                                     case 'd':
-                                        move(array, setArray, 'down', temp, setTemp);
+                                        move(array, setArray, 'down', temp, setTemp, setDirection);
                                         break;
                                     case '5':
-                                        move(array, setArray, 'action', temp, setTemp);
+                                        move(array, setArray, 'action', temp, setTemp, setDirection);
                                         break;
                                     default:
                                         console.warn(`알 수 없는 방향: ${direction}`);
@@ -159,7 +161,7 @@ export default function Chat({ Obj, size, left, bottom, anime, id, text, map, ob
     return (
         <Container>
             <BackBtn title={`stages/${title}`} />
-            <Simulator array={array} img={object} title={title}/>
+            <Simulator array={array} img={object} title={title} direction={direction}/>
             <ChatBg>
                 <Chating ref={chatingRef}>
                     {Text.map((item, index) => (
