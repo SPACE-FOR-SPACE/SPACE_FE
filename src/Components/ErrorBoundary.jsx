@@ -2,11 +2,17 @@ import React from 'react';
 import axios from "axios";
 import Loading from '../Page/Loading';
 import config from '../config';
+import { useEffect } from 'react';
 
 class ErrorBoundary extends React.Component {
     constructor(props) {
         super(props);
-        this.state = { hasError: false, isTokenExpired: false, isReissuing: false };
+        this.state = { 
+            hasError: false, 
+            isTokenExpired: false, 
+            isReissuing: false, 
+            errorMessage: '' 
+        };
     }
 
     static getDerivedStateFromError(error) {
@@ -18,8 +24,22 @@ class ErrorBoundary extends React.Component {
 
     componentDidCatch(error, errorInfo) {
         console.error("Error caught in ErrorBoundary:", error, errorInfo);
-        if (this.state.isTokenExpired && !this.state.isReissuing) {
-            this.reissueToken();
+        const errorMessage = error.message || '오류가 발생했습니다.';
+        this.setState({ hasError: true, errorMessage });
+    }
+
+    componentDidMount() {
+        if (this.state.hasError && !this.state.isReissuing) {
+            const confirmed = window.confirm(`오류가 발생했습니다:\n${this.state.errorMessage}\n\n이전 페이지로 돌아가시겠습니까?`);
+            if (confirmed) {
+                const previousUrl = document.referrer;
+                if (previousUrl) {
+                    window.location.href = previousUrl;
+                } else {
+                    window.location.href = '/';
+                    window.location.href = '/';
+                }
+            }
         }
     }
 
@@ -36,13 +56,20 @@ class ErrorBoundary extends React.Component {
 
     render() {
         if (this.state.hasError) {
-            if (this.state.isTokenExpired) {
-                if (this.state.isReissuing) {
-                    return <Loading />;
-                }
-                return <h1>토큰 재발급 시도 중 문제가 발생했습니다.</h1>;
-            }
-            return <h1>오류가 발생했습니다.</h1>;
+            return (
+                <div style={{ textAlign: 'center', padding: '20px' }}>
+                    <h2>오류가 발생했습니다</h2>
+                    <p>{this.state.errorMessage}</p>
+                    <button onClick={() => {
+                        const previousUrl = document.referrer;
+                        if (previousUrl) {
+                            window.location.href = previousUrl;
+                        } else {
+                            window.location.href = '/';
+                        }
+                    }}>이전 페이지로 돌아가기</button>
+                </div>
+            );
         }
 
         return this.props.children;
