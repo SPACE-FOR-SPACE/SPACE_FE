@@ -2,15 +2,16 @@ import { useState, useEffect } from "react";
 import Stage from "./Stage";
 import styled from "styled-components";
 
-export default function Simulator({array, img, title,   direction}) {
+export default function Simulator({array, img, title, direction}) {
     const [item, setItem] = useState([]);
     useEffect(() => {
         setItem(img);
         console.log(direction);
     }, []);
-    
+
+
     return (
-        <SimulBg>
+        <SimulBg onClick={() => console.log(item)}>
             <Map>
                 <tbody>
                     {array.map((row, rowIndex) => (

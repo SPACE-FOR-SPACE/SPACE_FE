@@ -12,8 +12,26 @@ export default function Plant() {
     const [text, setText] = useState([]);
     const [map, setMap] = useState([]);
     const [loading, setLoading] = useState(true);
-    const [object, setObject] = useState([]);
+    const [object, setObject] = useState({});
     const [dir, setDir] = useState("");
+
+    useEffect(() => {
+        setObject({
+            0: "/src/assets/map/player.svg",
+            3: "/src/assets/map/wall.svg",
+            1000: "/src/assets/map/potion.svg",
+            1001: "/src/assets/map/tree_wall.svg",
+            1002: "/src/assets/map/herb.svg",
+            1003: "/src/assets/map/mushroom1.svg",
+            1004: "/src/assets/map/mushroom2.svg",
+            1005: "/src/assets/map/flower.svg",
+            1006: "/src/assets/map/snake.svg",
+            1007: "/src/assets/map/tree.svg",
+            1008: "/src/assets/map/egg.svg",
+            1009: "/src/assets/map/incubator.svg",
+            2001: "/src/assets/map/thorn.svg",
+        });
+    }, []); // 마운트 시 한 번만 실행
 
     useEffect(() => {
         setLoading(true);
@@ -52,10 +70,6 @@ export default function Plant() {
                     }))
                 ]);
                 setMap(response1.data.map);
-                setObject({
-                    ...response1.data.mapObjectImage,
-                    ...response3.data.mapObjectImage
-                });
                 setLoading(false);
                 setDir(response1.data.characterDirection);
             } catch (error) {
