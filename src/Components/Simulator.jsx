@@ -8,7 +8,6 @@ export default function Simulator({array, img, title, direction}) {
         setItem(img);
     }, []);
 
-
     return (
         <SimulBg>
             <Map>
@@ -16,12 +15,17 @@ export default function Simulator({array, img, title, direction}) {
                     {array.map((row, rowIndex) => (
                         <tr key={rowIndex}>
                             {row.map((cell, cellIndex) => (
-                                <Piece key={cellIndex} img={item[cell]}>{
-                                    cell == 0 & direction === "RIGHT" ? '→' :
-                                    cell == 0 & direction === "LEFT" ? '←' :
-                                    cell == 0 & direction === "UP" ? '↑' :
-                                    cell == 0 & direction === "DOWN" ? '↓' : ''
-                                }</Piece>
+                                <Piece key={cellIndex} img={
+                                    cell === 0
+                                        ? direction === "UP"
+                                            ? item[0.1]
+                                            : direction === "LEFT"
+                                                ? item[0.2]
+                                                : direction === "RIGHT"
+                                                    ? item[0.3]
+                                                    : item[0]
+                                        : item[cell]
+                                } />
                             ))}
                         </tr>
                     ))}
