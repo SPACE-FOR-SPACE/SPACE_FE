@@ -17,10 +17,10 @@ export default function Plant() {
 
     useEffect(() => {
         setObject({
-            0: "/player/player_f.svg",
-            0.1: "/player/player_b.svg",
-            0.2: "/player/player_l.svg",
-            0.3: "/player/player_r.svg",
+            character_up: "/player/player_b.svg",
+            character_down: "/player/player_f.svg",
+            character_left: "/player/player_l.svg",
+            character_right: "/player/player_r.svg",
             3: "/map/wall.svg",
             1000: "/map/potion.svg",
             1001: "/map/tree_wall.svg",

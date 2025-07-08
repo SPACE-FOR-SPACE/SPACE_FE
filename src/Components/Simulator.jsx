@@ -18,12 +18,12 @@ export default function Simulator({array, img, title, direction}) {
                                 <Piece key={cellIndex} img={
                                     cell === 0
                                         ? direction === "UP"
-                                            ? item[0.1]
+                                            ? item["character_up"]
                                             : direction === "LEFT"
-                                                ? item[0.2]
+                                                ? item["character_left"]
                                                 : direction === "RIGHT"
-                                                    ? item[0.3]
-                                                    : item[0]
+                                                    ? item["character_right"]
+                                                    : item["character_down"]
                                         : item[cell]
                                 } />
                             ))}
