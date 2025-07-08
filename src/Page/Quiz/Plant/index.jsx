@@ -17,21 +17,21 @@ export default function Plant() {
 
     useEffect(() => {
         setObject({
-            0: "/src/assets/map/player.svg",
-            3: "/src/assets/map/wall.svg",
-            1000: "/src/assets/map/potion.svg",
-            1001: "/src/assets/map/tree_wall.svg",
-            1002: "/src/assets/map/herb.svg",
-            1003: "/src/assets/map/mushroom1.svg",
-            1004: "/src/assets/map/mushroom2.svg",
-            1005: "/src/assets/map/flower.svg",
-            1006: "/src/assets/map/snake.svg",
-            1007: "/src/assets/map/tree.svg",
-            1008: "/src/assets/map/egg.svg",
-            1009: "/src/assets/map/incubator.svg",
-            2001: "/src/assets/map/thorn.svg",
+            0: "/map/player.svg",
+            3: "/map/wall.svg",
+            1000: "/map/potion.svg",
+            1001: "/map/tree_wall.svg",
+            1002: "/map/herb.svg",
+            1003: "/map/mushroom1.svg",
+            1004: "/map/mushroom2.svg",
+            1005: "/map/flower.svg",
+            1006: "/map/snake.svg",
+            1007: "/map/tree.svg",
+            1008: "/map/egg.svg",
+            1009: "/map/incubator.svg",
+            2001: "/map/thorn.svg",
         });
-    }, []); // 마운트 시 한 번만 실행
+    }, []);
 
     useEffect(() => {
         setLoading(true);
@@ -50,13 +50,12 @@ export default function Plant() {
                     },
                     withCredentials: true,
                 });
-
-                const response3 = await axios.get(`${config.api}/chapters/1`, {
-                    headers: {
-                        'Content-Type': 'application/json',
-                    },
-                    withCredentials: true,
-                });
+                // const response3 = await axios.get(`${config.api}/chapters/1`, {
+                //     headers: {
+                //         'Content-Type': 'application/json',
+                //     },
+                //     withCredentials: true,
+                // });
                 setText([
                     {
                         User: false,
@@ -73,7 +72,7 @@ export default function Plant() {
                 setLoading(false);
                 setDir(response1.data.characterDirection);
             } catch (error) {
-                console.error('실패:', error);
+                console.error(error);
                 setLoading(false);
             }
         };

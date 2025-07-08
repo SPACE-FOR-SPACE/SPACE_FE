@@ -52,7 +52,7 @@ const App = () => {
           <Route path="/" element={<LandingPage />} />
           <Route path="/join" element={<Join />} />
           <Route path="/login" element={<Login />} />
-          {/* <Route element={<PrivateRoute />}> */}
+          <Route element={<PrivateRoute />}>
             <Route path="/main" element={<Main />} />
             <Route path="/sea/:id" element={<Sea />} />
             <Route path="/volcano/:id" element={<Volcano />} />
@@ -66,7 +66,7 @@ const App = () => {
             <Route path="/admin/question" element={<Question />} />
             <Route path="/admin/incorrect" element={<Incorrect />} />
             <Route path="/admin/maximun" element={<Maximun />} />
-          {/* </Route> */}
+          </Route>
         </Routes>
       </Suspense>
     </ErrorBoundary>

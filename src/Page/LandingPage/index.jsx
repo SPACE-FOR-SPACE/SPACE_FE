@@ -35,7 +35,6 @@ export default function LandingPage({ setMainLogin }) {
           },
           withCredentials: true,
         });
-        console.log(response);
         if (response.status === 200) {
           setLogin(true)
         }
@@ -106,8 +105,6 @@ export default function LandingPage({ setMainLogin }) {
       console.error('로그아웃 실패', error);
     }
   }
-
-  console.log(login);
 
   return (
     <div>

@@ -6,12 +6,11 @@ export default function Simulator({array, img, title, direction}) {
     const [item, setItem] = useState([]);
     useEffect(() => {
         setItem(img);
-        console.log(direction);
     }, []);
 
 
     return (
-        <SimulBg onClick={() => console.log(item)}>
+        <SimulBg>
             <Map>
                 <tbody>
                     {array.map((row, rowIndex) => (
