@@ -36,9 +36,8 @@ export default function LandingPage({ setMainLogin }) {
           withCredentials: true,
         });
         console.log(response);
-        if (response.status !== 200) {
+        if (response.status === 200) {
           setLogin(true)
-          console.log(response.status);
         }
       } catch (e) {
         setLogin(false);
